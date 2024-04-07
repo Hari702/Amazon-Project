@@ -1,70 +1,5 @@
-// const products = [{
-//     image: "images/products/athletic-cotton-socks-6-pairs.jpg",
-//     name: "Black and Gray Athletic Cotton Socks - 6 Pairs",
-//     rating: {
-//         stars: 4.5,
-//         count: 87
-//     },
-//     price: "100"
-// },
 
-// {
-//     image: "images/products/intermediate-composite-basketball.jpg",
-//     name: "Intermediate Size Basketball",
-//     rating: {
-//         stars: 4,
-//         count: 147
-//     },
-//     price: "500"
-// },
-
-// {
-//     image: "images/products/adults-plain-cotton-tshirt-2-pack-teal.jpg",
-//     name: "Adults Plain Cotton T-Shirt - 2 Pack",
-//     rating: {
-//         stars: 4.5,
-//         count: 56
-//     },
-//     price: "700"
-// },
-
-// {
-//     image: "images/products/black-2-slot-toaster.jpg",
-//     name: "2 Slot Toaster - Black",
-//     rating: {
-//         stars: 5,
-//         count: 2197
-//     },
-//     price: "1,580"
-// },
-
-// {
-//     image: "images/products/6-piece-white-dinner-plate-set.jpg",
-//     name: "6 Piece White Dinner Plate Set",
-//     rating: {
-//         stars: 4,
-//         count: 37
-//     },
-//     price: "1,799"
-    
-// },
-
-// {
-//     image:"images/products/6-piece-non-stick-baking-set.webp",
-//     name:"6-Piece Nonstick, Carbon Steel Oven Bakeware Baking Set",
-//     rating:{
-//         stars:4.5,
-//         count:175 
-//     },
-//     price:"2,899"
-// }
-
-
-
-
-// ]
-
-
+// generaing HTML code 
 let product_html = ""
 
 products.forEach((product) => {
@@ -84,20 +19,27 @@ products.forEach((product) => {
        <p>${product.price}</p>
    </div>
    <div class="product-quantity">
-       <select>
-           <option>1</option>
-           <option>2</option>
-           <option>3</option>
-           <option>4</option>
-           <option>5</option>
-           <option>6</option>
-           <option>7</option>
-           <option>8</option>
-           <option>9</option>
-           <option>10</option>
+       <select class="js-quantity-selector-${product.id}">
+           <option selected value="1">1</option>
+           <option value="2">2</option>
+           <option value="3">3</option>
+           <option value="4">4</option>
+           <option value="5">5</option>
+           <option value="6">6</option>
+           <option value="7">7</option>
+           <option value="8">8</option>
+           <option value="9">9</option>
+           <option value="10">10</option>
        </select>
    </div>
-   <button class="Add-to-Cart-btn">Add to Cart</button>
+
+   <div class="added-to-cart js-added-to-cart-${product.id}">
+     <img src="images/icons/checkmark.png">
+      Added
+    </div>
+   
+    <button class="Add-to-Cart-btn js-add-to-cart-btn" data-product-id="${product.id}">Add to Cart</button>
+   
 </div>`
 
 
@@ -105,10 +47,103 @@ products.forEach((product) => {
 
 console.log(product_html)
 
+// console.log(product_html)
 
-let products_container = document.querySelector(".products-container")
+// to insert the html code using DOM
+
+document.querySelector(".products-container").innerHTML = product_html
+
+// console.log(products_container)
 
 
-products_container.innerHTML = product_html
+let js_cart_btn = document.querySelectorAll(".js-add-to-cart-btn")
 
-console.log(products_container)
+
+js_cart_btn.forEach((button) => {
+    let addedMessageTimeout;
+    button.addEventListener("click", () => {
+        // console.log(button.dataset.productName)
+        let productid = button.dataset.productId
+
+        let quantity = parseInt(document.querySelector(`.js-quantity-selector-${productid}`).value)
+
+
+        let matchingitem;
+
+        //   adding product to the cart
+
+        cart.forEach((item) => {
+            // console.log(`${productname}===${item.productname}`)
+            if (productid === item.productid) {
+                matchingitem = item
+            }
+        })
+
+        if (matchingitem) {
+            matchingitem.quantity += quantity
+        }
+
+        else {
+            cart.push({
+                // productid:productid
+                productid,
+                // quantity:quantity
+                quantity
+            })
+
+        }
+
+        // to display product quantity in cart
+
+        let num_quantity = 0;
+
+        cart.forEach((item) => {
+
+            num_quantity += item.quantity
+
+        })
+
+        document.querySelector(".order-num").innerHTML = num_quantity
+
+        // console.log(cart)
+
+
+
+
+        
+       
+        
+
+        // setTimeout(() =>{
+        // if(addedMessageTimeout) {
+        //     console.log("hello")
+        //     clearInterval(addedMessageTimeout)
+        // }
+
+
+
+        if(addedMessageTimeout) {
+            // console.log("hello")
+            clearInterval(addedMessageTimeout)
+        }
+
+        
+        let addedmessage = document.querySelector(`.js-added-to-cart-${productid}`)
+        addedmessage.classList.add("added-to-cart-visible")
+
+        const closure_id = setTimeout(() => {
+            addedmessage.classList.remove("added-to-cart-visible")
+        }, 3000)
+
+        addedMessageTimeout = closure_id
+        console.log(addedMessageTimeout)
+    })
+
+    
+    // console.log(addedMessageTimeout)
+    // })
+    
+})
+
+
+

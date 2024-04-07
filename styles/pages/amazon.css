@@ -180,6 +180,23 @@
     border: 2px solid hsl(36, 100%, 50%);
 }
 
+.added-to-cart{
+
+    display: flex;
+    align-items: center;
+    color: green;
+    opacity: 0;
+
+}
+
+.added-to-cart-visible{
+    opacity: 1;
+}
+
+.added-to-cart img{
+    width: 20px;
+}
+
 .Add-to-Cart-btn{
     margin-top: 10px;
     margin-bottom: 5px;
