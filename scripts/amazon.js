@@ -1,4 +1,4 @@
-
+import {cart} from '../data/cart.js'
 // generaing HTML code 
 let product_html = ""
 
