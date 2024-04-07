@@ -1,3 +1,4 @@
+import { products } from '../data/products.js'
 import {cart} from '../data/cart.js'
 // generaing HTML code 
 let product_html = ""
@@ -121,6 +122,8 @@ js_cart_btn.forEach((button) => {
         // }
 
 
+
+        // when we click add cart button added with color green will display and when click add cart button within 3 sec continuously added popup will display 3 sec and display,will not  continue to previous timeout it will start with new timeout
 
         if(addedMessageTimeout) {
             // console.log("hello")
