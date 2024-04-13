@@ -1,5 +1,6 @@
 import { products } from '../data/products.js'
-import {cart} from '../data/cart.js'
+import { cart, addToCart } from '../data/cart.js'
+
 // generaing HTML code 
 let product_html = ""
 
@@ -57,80 +58,31 @@ document.querySelector(".products-container").innerHTML = product_html
 // console.log(products_container)
 
 
-let js_cart_btn = document.querySelectorAll(".js-add-to-cart-btn")
 
+let js_cart_btn = document.querySelectorAll(".js-add-to-cart-btn")
+function updateCartQuantity() {
+
+    let num_quantity = 0;
+
+    cart.forEach((cartItem) => {
+        num_quantity += cartItem.quantity
+    })
+    document.querySelector(".order-num").innerHTML = num_quantity
+}
 
 js_cart_btn.forEach((button) => {
+
     let addedMessageTimeout;
     button.addEventListener("click", () => {
-        // console.log(button.dataset.productName)
+        console.log(button.dataset.productId)
         let productid = button.dataset.productId
-
-        let quantity = parseInt(document.querySelector(`.js-quantity-selector-${productid}`).value)
-
-
-        let matchingitem;
-
-        //   adding product to the cart
-
-        cart.forEach((item) => {
-            // console.log(`${productname}===${item.productname}`)
-            if (productid === item.productid) {
-                matchingitem = item
-            }
-        })
-
-        if (matchingitem) {
-            matchingitem.quantity += quantity
-        }
-
-        else {
-            cart.push({
-                // productid:productid
-                productid,
-                // quantity:quantity
-                quantity
-            })
-
-        }
-
-        // to display product quantity in cart
-
-        let num_quantity = 0;
-
-        cart.forEach((item) => {
-
-            num_quantity += item.quantity
-
-        })
-
-        document.querySelector(".order-num").innerHTML = num_quantity
-
-        // console.log(cart)
-
-
-
-
-        
-       
-        
-
-        // setTimeout(() =>{
-        // if(addedMessageTimeout) {
-        //     console.log("hello")
-        //     clearInterval(addedMessageTimeout)
-        // }
-
-
-
+        addToCart(productid);
+        updateCartQuantity();
         // when we click add cart button added with color green will display and when click add cart button within 3 sec continuously added popup will display 3 sec and display,will not  continue to previous timeout it will start with new timeout
-
-        if(addedMessageTimeout) {
-            // console.log("hello")
+        if (addedMessageTimeout) {
+            console.log("hello")
             clearInterval(addedMessageTimeout)
         }
-
-        
         let addedmessage = document.querySelector(`.js-added-to-cart-${productid}`)
         addedmessage.classList.add("added-to-cart-visible")
 
@@ -138,14 +90,19 @@ js_cart_btn.forEach((button) => {
             addedmessage.classList.remove("added-to-cart-visible")
         }, 3000)
 
-        addedMessageTimeout = closure_id
+
         console.log(addedMessageTimeout)
+
+        // displayAdded(productid);
+
+        console.log(button)
+
     })
 
-    
+
     // console.log(addedMessageTimeout)
     // })
-    
+
 })
 
 
