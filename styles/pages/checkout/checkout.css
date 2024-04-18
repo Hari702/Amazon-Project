@@ -1,211 +1,300 @@
-.main {
-  max-width: 1100px;
+*{
+  margin: 0;
+  padding: 0;
+}
+
+body{
+  font-family: Roboto, Arial;
+  color: rgb(33, 33, 33);
+}
+
+
+.checkout-products{
+  /* display: flex;
+  justify-content:space-around; */
+  
+  max-width: 1160px;
   padding-left: 30px;
   padding-right: 30px;
-
-  margin-top: 140px;
-  margin-bottom: 100px;
-
-  /* margin-left: auto;
-     margin-right auto;
-     Is a trick for centering an element horizontally
-     without needing a container. */
   margin-left: auto;
   margin-right: auto;
 }
+  
 
-.page-title {
+.checkout-product-heading{
+  margin-top: 80px;
+  margin-bottom: 20px;
+  
   font-weight: 700;
   font-size: 22px;
-  margin-bottom: 18px;
 }
 
-.checkout-grid {
+
+
+.grid-container{
   display: grid;
-  /* Here, 1fr means the first column will take
-     up the remaining space in the grid. */
   grid-template-columns: 1fr 350px;
-  column-gap: 12px;
 
-  /* Use align-items: start; to prevent the elements
-     in the grid from stretching vertically. */
+  column-gap: 15px;
   align-items: start;
+  width: 100%;
 }
 
-@media (max-width: 1000px) {
-  .main {
-    max-width: 500px;
+@media  screen and (max-width:1000px) {
+  .checkout-products{
+    max-width: 560px;
   }
-
-  .checkout-grid {
+  .grid-container{
     grid-template-columns: 1fr;
   }
+  
 }
 
-.cart-item-container,
-.payment-summary {
-  border: 1px solid rgb(222, 222, 222);
-  border-radius: 4px;
-  padding: 18px;
+.ordered-product-container{
+  border:1px solid hsl(0, 0%, 91%);
+  padding-top: 20px;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-bottom: 30px;
+  margin-bottom: 10px;
+  border-radius: 5px;
 }
 
-.cart-item-container {
-  margin-bottom: 12px;
+
+@media  screen and (max-width:1000px) {
+ .ordered-product-container{
+  padding-bottom: 10px;
+ 
+ }
+  
 }
 
-.payment-summary {
-  padding-bottom: 5px;
+.delivery-date-final{
+  color:  hsl(104,100%,23%);
+  font-size: 19px;
+  font-weight:700;
+}
+.cart-item-details{
+  display: flex;
+  padding-top: 20px;
+  justify-content: start;
+  flex-wrap: wrap;
+
+
 }
 
-@media (max-width: 1000px) {
-  .payment-summary {
-    /* grid-row: 1 means this element will be placed into row
-      1 in the grid. (Normally, the row that an element is
-      placed in is determined by the order of the elements in
-      the HTML. grid-row overrides this default ordering). */
-    grid-row: 1;
-    margin-bottom: 12px;
+@media screen and (max-width:1000px){
+  .cart-item-details{
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    column-gap: 15px;
+    row-gap: 20px;
+    
+  }
+  .delivery-option{
+    grid-column-start: 1;
+    grid-column-end: 3;
   }
 }
 
-.delivery-date {
-  color: rgb(0, 118, 0);
+/* @media screen and (max-width:400px){
+  .checkout-products{
+    max-width: 200px;
+  }
+ 
+} */
+
+.cart-item{
+  width: 100px;
+  height: 100px;
+}
+
+.cart-item-name-price{
+  margin-left: 30px;
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 1;
+  
+}
+
+.cart-item-name{
+  padding-bottom: 5px;
+  /* width: 300px; */
+  font-weight: 700;
+  text-align:left;
+
+}
+
+.cart-item-price{
+  display: flex;
+  align-items: center;
+  
+}
+
+.cart-item-price i{
+  color: hsl(0,48%,47%);
+}
+
+
+
+.price{
+  padding-bottom: 5px;
+  font-weight: 700;
+  color: hsl(0,48%,47%);
+}
+
+.cart-item-quantity{
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.quantity{
+  padding-right:5px;
+}
+/* .update-btn{
+
+} */
+
+.cart-item-quantity button{
+  border: none;
+  padding-right: 5px;
+  background-color: white;
+  color:hsl(196,74%,44%) ;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.delivery-option{
+  display: flex;
+  flex-direction: column;
+  padding-left: 20px;
+  flex-wrap: nowrap;
+  flex-shrink: 0;
+  align-content: flex-end;
+}
+
+@media screen and (max-width:1000px) {
+  .delivery-option{
+    padding-top: 10px;
+    padding-left: 0;
+  }
+}
+
+.delivery-option-heading{
+  font-weight: 700;
+  max-width: 200px;
+  width: 100%;
+}
+
+.delivery-charge-container{
+  display: flex;
+  align-items: center;
+  padding-top: 10px;
+  flex-shrink: 0;
+}
+
+.delivery-charge-radio-btn{
+  height: 20px;
+  width: 20px;
+  margin-right: 5px;
+}
+
+.delivery-date{
+  color:rgb(0, 118, 0);
+  font-weight: 500;
+  padding-bottom: 3px;
+}
+
+.delivery-charge-para{
+  color:rgb(120, 120, 120);
+  font-size: 15px;
+}
+
+.delivery-charge{
+  display: flex;
+  align-items: center;
+}
+
+.delivery-charge i{
+  color:rgb(120, 120, 120);
+}
+
+.delivery-charge p{
+  padding-bottom: 2px;
+}
+
+
+.payment-summary-container{
+  border:1px solid hsl(0, 0%, 91%);
+  padding-top: 20px;
+  padding-left: 20px;
+  padding-right: 20px;
+  margin-bottom: 265px;
+  border-radius: 5px;
+}
+
+@media screen and (max-width:1000px){
+  .payment-summary-container{
+    grid-row: 1;
+    margin-bottom: 20px;
+  }
+}
+
+.payment-summary-heading{
+  font-size: 19px;
+  font-weight:700;
+}
+
+.payment-summary-row{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 7px;
+}
+
+.payment-summary-price{
+  display: flex;
+  align-items: center;
+}
+
+.payment-price{
+  /* padding-bottom: 3px; */
+}
+
+.total-before-tax{
+  padding-top: 7px;
+  border-top: 1px solid hsl(0, 0%, 91%);
+}
+
+.estimated-tax{
+ border-bottom: 1px solid hsl(0, 0%, 91%) ;
+ padding-bottom: 5px;
+}
+/* .total-before-tax-right{
+  border-top: 1px solid hsl(0, 0%, 91%);
+} */
+
+.order-total{
+  padding-top: 10px;
+  color:hsl(13,90%,37%);
   font-weight: 700;
   font-size: 19px;
-  margin-top: 5px;
-  margin-bottom: 22px;
 }
 
-.cart-item-details-grid {
-  display: grid;
-  /* 100px 1fr 1fr; means the 2nd and 3rd column will
-     take up half the remaining space in the grid
-     (they will divide up the remaining space evenly). */
-  grid-template-columns: 100px 1fr 1fr;
-  column-gap: 25px;
+.order-total-price{
+   padding-bottom: 4px;
 }
 
-@media (max-width: 1000px) {
-  .cart-item-details-grid {
-    grid-template-columns: 100px 1fr;
-    row-gap: 30px;
-  }
-}
-
-.product-image {
-  max-width: 100%;
-  max-height: 120px;
-
-  /* margin-left: auto;
-     margin-right auto;
-     Is a trick for centering an element horizontally
-     without needing a container. */
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.product-name {
-  font-weight: 700;
-  margin-bottom: 8px;
-}
-
-.product-price {
-  color: rgb(177, 39, 4);
-  font-weight: 700;
-  margin-bottom: 5px;
-}
-
-.product-quantity .link-primary {
-  margin-left: 3px;
-}
-
-@media (max-width: 1000px) {
-  .delivery-options {
-    /* grid-column: 1 means this element will be placed
-       in column 1 in the grid. (Normally, the column that
-       an element is placed in is determined by the order
-       of the elements in the HTML. grid-column overrides
-       this default ordering).
-       
-       / span 2 means this element will take up 2 columns
-       in the grid (Normally, each element takes up 1
-       column in the grid). */
-    grid-column: 1 / span 2;
-  }
-}
-
-.delivery-options-title {
-  font-weight: 700;
+.place-order-btn{
+  margin-top: 20px;
   margin-bottom: 10px;
-}
-
-.delivery-option {
-  display: grid;
-  grid-template-columns: 24px 1fr;
-  margin-bottom: 12px;
-  cursor: pointer;
-}
-
-.delivery-option-input {
-  margin-left: 0px;
-  cursor: pointer;
-}
-
-.delivery-option-date {
-  color: rgb(0, 118, 0);
-  font-weight: 500;
-  margin-bottom: 3px;
-}
-
-.delivery-option-price {
-  color: rgb(120, 120, 120);
-  font-size: 15px;
-}
-
-.payment-summary-title {
-  font-weight: 700;
-  font-size: 18px;
-  margin-bottom: 12px;
-}
-
-.payment-summary-row {
-  display: grid;
-  /* 1fr auto; means the width of the 2nd column will be
-     determined by the elements inside the column (auto).
-     The 1st column will take up the remaining space. */
-  grid-template-columns: 1fr auto;
-
-  font-size: 15px;
-  margin-bottom: 9px;
-}
-
-.payment-summary-money {
-  text-align: right;
-}
-
-.subtotal-row .payment-summary-money {
-  border-top: 1px solid rgb(222, 222, 222);
-}
-
-.subtotal-row div {
-  padding-top: 9px;
-}
-
-.total-row {
-  color: rgb(177, 39, 4);
-  font-weight: 700;
-  font-size: 18px;
-
-  border-top: 1px solid rgb(222, 222, 222);
-  padding-top: 18px;
-}
-
-.place-order-button {
+  padding-top: 10px;
+  padding-bottom: 10px;
   width: 100%;
-  padding-top: 12px;
-  padding-bottom: 12px;
-  border-radius: 8px;
-
-  margin-top: 11px;
-  margin-bottom: 15px;
+  border-radius: 10px;
+  border: none;
+  background-color:  hsl(50,100%,54%);
 }
+
+
