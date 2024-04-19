@@ -75,10 +75,16 @@ body{
   font-weight:700;
 }
 .cart-item-details{
-  display: flex;
+  /* display: flex;
   padding-top: 20px;
   justify-content: start;
-  flex-wrap: wrap;
+  flex-wrap: wrap; */
+
+  display: grid;
+  grid-template-columns: 100px 1fr 1fr;
+  padding-top: 20px;
+
+
 
 
 }

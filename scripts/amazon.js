@@ -7,7 +7,7 @@ let product_html = ""
 products.forEach((product) => {
     product_html += ` <div class="product-container">
    <div class="product-image-container">
-       <img  class="product-image" src=${product.image}>
+       <img  class="product-image" src="${product.image}">
    </div>
    <p class="product-name limit-text-to-2-lines">
        ${product.name}
@@ -59,16 +59,30 @@ document.querySelector(".products-container").innerHTML = product_html
 
 
 
+// let num_quantity=0;
+// function addNumQuantityToLocalStorage(){
+   
+// }
+
 let js_cart_btn = document.querySelectorAll(".js-add-to-cart-btn")
 function updateCartQuantity() {
-
-    let num_quantity = 0;
-
+    let  num_quantity = 0;
     cart.forEach((cartItem) => {
         num_quantity += cartItem.quantity
+        // addNumQuantityToLocalStorage()
+        localStorage.setItem("num_quantity",JSON.stringify(num_quantity))
+
     })
-    document.querySelector(".order-num").innerHTML = num_quantity
+
+    document.querySelector(".order-num").innerHTML = JSON.parse(localStorage.getItem("num_quantity"))
+    
 }
+
+
+   
+
+
+
 
 js_cart_btn.forEach((button) => {
 
@@ -78,6 +92,9 @@ js_cart_btn.forEach((button) => {
         let productid = button.dataset.productId
         addToCart(productid);
         updateCartQuantity();
+        
+
+        
         // when we click add cart button added with color green will display and when click add cart button within 3 sec continuously added popup will display 3 sec and display,will not  continue to previous timeout it will start with new timeout
         if (addedMessageTimeout) {
             console.log("hello")
