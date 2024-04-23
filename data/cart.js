@@ -70,3 +70,29 @@ export function removeProductFromCart(productId){
 
 }
 
+export var num_quantity=0;
+export function updateCartQuantity() {
+    num_quantity = 0;
+    cart.forEach((cartItem) => {
+        num_quantity += cartItem.quantity
+        // addNumQuantityToLocalStorage()
+        localStorage.setItem("num_quantity",JSON.stringify(num_quantity))
+        
+    })
+
+    return num_quantity    
+}
+
+export function updateQuantity(productId, newQuantity) {
+    let matchingItem;
+  
+    cart.forEach((cartItem) => {
+      if (productId === cartItem.productid) {
+        matchingItem = cartItem;
+      }
+    });
+  
+    matchingItem.quantity = newQuantity;
+  
+    addCartToLocalStorage()
+}

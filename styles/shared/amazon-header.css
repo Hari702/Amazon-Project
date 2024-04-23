@@ -167,11 +167,12 @@
 .order-num {
   position: absolute;
   top: 6px;
-  left: 28px;
+  left: 22px;
   color: hwb(39 0% 0%);
   font-weight: 700;
   text-align: center;
   font-size: 16px;
+  width: 26px;
 
 }
 

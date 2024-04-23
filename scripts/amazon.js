@@ -1,5 +1,5 @@
 import { products } from '../data/products.js'
-import { cart, addToCart } from '../data/cart.js'
+import { cart, addToCart,updateCartQuantity} from '../data/cart.js'
 
 // generaing HTML code 
 let product_html = ""
@@ -53,35 +53,16 @@ console.log(product_html)
 
 // to insert the html code using DOM
 
-document.querySelector(".products-container").innerHTML = product_html
+document.querySelector(".products-container").innerHTML = product_html;
 
 // console.log(products_container)
 
 
 
-// let num_quantity=0;
-// function addNumQuantityToLocalStorage(){
-   
-// }
-
 let js_cart_btn = document.querySelectorAll(".js-add-to-cart-btn")
-function updateCartQuantity() {
-    let  num_quantity = 0;
-    cart.forEach((cartItem) => {
-        num_quantity += cartItem.quantity
-        // addNumQuantityToLocalStorage()
-        localStorage.setItem("num_quantity",JSON.stringify(num_quantity))
 
-    })
-
-    document.querySelector(".order-num").innerHTML = JSON.parse(localStorage.getItem("num_quantity"))
-    
-}
-
-
-   
-
-
+let cartQuantity=updateCartQuantity();
+document.querySelector(".order-num").innerHTML = cartQuantity
 
 
 js_cart_btn.forEach((button) => {
@@ -91,8 +72,8 @@ js_cart_btn.forEach((button) => {
         console.log(button.dataset.productId)
         let productid = button.dataset.productId
         addToCart(productid);
-        updateCartQuantity();
-        
+        let cartQuantity=updateCartQuantity();
+document.querySelector(".order-num").innerHTML = cartQuantity
 
         
         // when we click add cart button added with color green will display and when click add cart button within 3 sec continuously added popup will display 3 sec and display,will not  continue to previous timeout it will start with new timeout
@@ -108,7 +89,7 @@ js_cart_btn.forEach((button) => {
         }, 3000)
 
 
-        console.log(addedMessageTimeout)
+        addedMessageTimeout=closure_id
 
         // displayAdded(productid);
 
@@ -121,6 +102,8 @@ js_cart_btn.forEach((button) => {
     // })
 
 })
+
+
 
 
 
