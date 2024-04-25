@@ -1,37 +1,27 @@
 import { cart,removeProductFromCart,updateCartQuantity,updateQuantity,updateDeliveryOption} from '../../data/cart.js'
-import { products } from '../../data/products.js'
-import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js'
-import { deliveryOptions } from '../../data/deliveryOptions.js'
+import { products,getProduct } from '../../data/products.js'
+
+import { deliveryOptions,getDeliveryOption } from '../../data/deliveryOptions.js'
+import { renderPaymentSummary } from './paymentSummary.js'
+import { calculateDeliveryDate } from '../../data/deliveryOptions.js'
 
 
 export function renderOrderSummary(){
     let cartProductHtml="";
   cart.forEach((cartItem) => {
       const productId = cartItem.productid
-      let matchingProduct;
+     
+
+     
+     let matchingProduct=getProduct(productId)
+     
+
+     const deliveryOptionId=cartItem.deliveryOptionId
   
-      products.forEach((product) => {
-  
-          if (product.id === productId) {
-              matchingProduct = product
-          }
-  
-      })
-  
-      let deliveryOption
-      const deliveryOptionId=cartItem.deliveryOptionId
-      deliveryOptions.forEach((option)=>{
-         if(deliveryOptionId===option.id){
-              deliveryOption=option
-              
-         }
-      })
-  
-      console.log()
-      const today=dayjs()
-     const deliveryDate=today.add(deliveryOption.deliveryDays,'day')
-     console.log(deliveryDate)
-     const priceString=deliveryDate.format('dddd, MMM D')
+     let deliveryOption=getDeliveryOption(deliveryOptionId)
+
+     let priceString=calculateDeliveryDate(deliveryOption)
+     
   
   
       cartProductHtml += `
@@ -59,6 +49,7 @@ export function renderOrderSummary(){
        </div>
      </div>
    </div>
+
    `
   
   })
@@ -68,14 +59,7 @@ export function renderOrderSummary(){
     let html=""
   deliveryOptions.forEach((deliveryOption)=>{
   
-     const today=dayjs()
-     
-     const deliveryDate=today.add(deliveryOption.deliveryDays,'day')
-     
-     console.log(deliveryDate)
-     const priceString=deliveryDate.format('dddd, MMM D')
-     console.log(priceString)
-     
+    let priceString=calculateDeliveryDate(deliveryOption)
      const price=deliveryOption.price===0?"Free":deliveryOption.price
     
      const isChecked=deliveryOption.id===cartItem.deliveryOptionId
@@ -136,8 +120,10 @@ export function renderOrderSummary(){
       let container=document.querySelector(`.ordered-product-container-${productId}`)
       console.log(container)
       container.remove()
+      renderOrderSummary()
       console.log(productId)
       updationCartQuantity()
+      renderPaymentSummary()
   
     })
   })
@@ -182,6 +168,7 @@ export function renderOrderSummary(){
        updateBtn.style.display="inline"
        updateQuantity(productId,newQuantity);
        updationCartQuantity()
+       renderPaymentSummary()
   
        
   
@@ -200,6 +187,7 @@ export function renderOrderSummary(){
     updateDeliveryOption(productId,deliveryOptionId)
     
     renderOrderSummary()
+    renderPaymentSummary()
    
     })
   })
