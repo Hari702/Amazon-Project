@@ -265,7 +265,7 @@ body{
 }
 
 .payment-price{
-  /* padding-bottom: 3px; */
+  padding-bottom: 3px;
 }
 
 .total-before-tax{
@@ -313,3 +313,6 @@ body{
 }
 
 
+.icon-payment{
+  color: hsla(0, 6%, 13%, 0.943);
+}

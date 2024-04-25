@@ -1,8 +1,7 @@
 import { cart, updateCartQuantity } from '../../data/cart.js';
 import { products,getProduct } from '../../data/products.js'
 import { getDeliveryOption } from '../../data/deliveryOptions.js';
-
-
+import { MoneyToNumericFormat } from '../utils/money.js';
 
 
 export function renderPaymentSummary(){
@@ -22,7 +21,7 @@ export function renderPaymentSummary(){
         let intPrice=parseInt(stringPrice)
         console.log(intPrice,typeof intPrice)
         productPrice+=intPrice * cartItem.quantity
-        stringProductPrice=productPrice.toLocaleString("en-IN")
+        stringProductPrice=MoneyToNumericFormat(productPrice)
         const deliveryOptionId=cartItem.deliveryOptionId
 
         let deliveryOption=getDeliveryOption(deliveryOptionId)
@@ -35,15 +34,15 @@ export function renderPaymentSummary(){
     console.log(deliveryPrice)
     let totalBeforeTax=productPrice+deliveryPrice
 
-    let stringTotalBeforeTax=totalBeforeTax.toLocaleString("en-IN")
+    let stringTotalBeforeTax=MoneyToNumericFormat(totalBeforeTax)
     console.log(stringTotalBeforeTax)
 
-    let tax=totalBeforeTax*0.1
-    let stringTax=tax.toLocaleString("en-IN")
+    let tax=Math.round(totalBeforeTax*0.1)
+    let stringTax=MoneyToNumericFormat(tax)
     console.log(stringTax)
 
     let orderTotal=tax+totalBeforeTax
-    orderTotal=orderTotal.toLocaleString("en-IN")
+    orderTotal=MoneyToNumericFormat(orderTotal)
     let cartQuantity=updateCartQuantity()
 
     renderPaymentSummaryHtml+=`<div class="payment-summary-heading">Order Summary</div>
@@ -51,7 +50,7 @@ export function renderPaymentSummary(){
       <div>Item (${cartQuantity}):</div>
       <div>
         <div class="payment-summary-price">
-          <i class="fa-solid fa-indian-rupee-sign"></i>
+          <i  class="fa-solid fa-indian-rupee-sign icon-payment"></i>
           <p class="payment-price">${stringProductPrice}</p>
         </div>
       </div>
