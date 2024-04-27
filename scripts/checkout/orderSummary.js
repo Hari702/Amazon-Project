@@ -30,17 +30,17 @@ export function renderOrderSummary(){
      <div class="cart-item-details">
        <img class="cart-item" src="${matchingProduct.image}">
        <div class="cart-item-name-price">
-         <div class="cart-item-name">${matchingProduct.name}</div>
+         <div class="cart-item-name js-cart-item-name-${matchingProduct.id}">${matchingProduct.name}</div>
          <div class="cart-item-price">
            <i class="fa-solid fa-indian-rupee-sign"></i>
-           <p class="price">${matchingProduct.price}</p>
+           <p class="price js-price-${matchingProduct.id}">${matchingProduct.price}</p>
          </div>
          <div class="cart-item-quantity">
            <div class="quantity quantity-${matchingProduct.id}">Quantity:${cartItem.quantity}</div>
            <button class="update-btn js-update-btn js-update-btn-${matchingProduct.id}" data-product-id="${matchingProduct.id}">Update</button>
            <input class="quantity-input js-quantity-input-${matchingProduct.id}" type="number">
            <button class="save-quantity-input js-save-quantity link-primary js-save-quantity-${matchingProduct.id}" data-product-id="${matchingProduct.id}">Save</button> 
-           <button class="delete-btn js-delete-btn" data-product-id="${matchingProduct.id}">Delete</button>
+           <button class="delete-btn js-delete-btn js-delete-btn-${matchingProduct.id}" data-product-id="${matchingProduct.id}">Delete</button>
          </div>
        </div>
        <div class="delivery-option" >
