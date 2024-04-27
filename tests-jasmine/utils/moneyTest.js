@@ -1,4 +1,4 @@
-import { MoneyToNumericFormat } from "../scripts/utils/money.js";
+import { MoneyToNumericFormat } from "../../scripts/utils/money.js";
 
 
 
