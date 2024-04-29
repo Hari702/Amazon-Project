@@ -20,13 +20,13 @@ export function renderOrderSummary(){
   
      let deliveryOption=getDeliveryOption(deliveryOptionId)
 
-     let priceString=calculateDeliveryDate(deliveryOption)
+     let dataString=calculateDeliveryDate(deliveryOption)
      
   
   
       cartProductHtml += `
   <div class="ordered-product-container   ordered-product-container-${matchingProduct.id}">
-       <p class="delivery-date-final">Delivery date: ${priceString}</p>
+       <p class="delivery-date-final">Delivery date: ${dataString}</p>
      <div class="cart-item-details">
        <img class="cart-item" src="${matchingProduct.image}">
        <div class="cart-item-name-price">
@@ -59,7 +59,7 @@ export function renderOrderSummary(){
     let html=""
   deliveryOptions.forEach((deliveryOption)=>{
   
-    let priceString=calculateDeliveryDate(deliveryOption)
+    let dateString=calculateDeliveryDate(deliveryOption)
      const price=deliveryOption.price===0?"Free":deliveryOption.price
     
      const isChecked=deliveryOption.id===cartItem.deliveryOptionId
@@ -69,9 +69,9 @@ export function renderOrderSummary(){
   
     if(price==="Free"){
     html+=`<div class="delivery-charge-container js-delivery-option" data-product-id="${matchingProduct.id}" data-delivery-option-id="${deliveryOption.id}">
-    <input class="delivery-charge-radio-btn" ${isChecked?"checked":" "} type="radio" name="delivery-date-${matchingProduct.id}" value="${priceString}">
+    <input class="delivery-charge-radio-btn js-delivery-option-${matchingProduct.id}-${deliveryOption.id}" ${isChecked?"checked":" "} type="radio" name="delivery-date-${matchingProduct.id}" value="${dateString}">
     <div>
-      <p class="delivery-date">${priceString}</p>
+      <p class="delivery-date">${dateString}</p>
       <div class="delivery-charge">
       <p class="delivery-charge-para">${price} Shipping</p>
       </div>
@@ -81,9 +81,9 @@ export function renderOrderSummary(){
   else{
     html+=`<div class="delivery-charge-container js-delivery-option"
     data-product-id="${matchingProduct.id}" data-delivery-option-id="${deliveryOption.id}">
-    <input class="delivery-charge-radio-btn" ${isChecked?"checked":" " } type="radio" name="delivery-date-${matchingProduct.id}" value="${priceString}">
+    <input class="delivery-charge-radio-btn js-delivery-option-${matchingProduct.id}-${deliveryOption.id}" ${isChecked?"checked":" " } type="radio" name="delivery-date-${matchingProduct.id}" value="${dateString}">
     <div>
-      <p class="delivery-date">${priceString}</p>
+      <p class="delivery-date js-delivery-">${dateString}</p>
       <div class="delivery-charge">
       <i class="fa-solid fa-indian-rupee-sign"></i>
       <p class="delivery-charge-para">${price} - Shipping</p>

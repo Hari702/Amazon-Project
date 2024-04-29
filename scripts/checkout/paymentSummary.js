@@ -60,7 +60,7 @@ export function renderPaymentSummary(){
       <div>
         <div class="payment-summary-price">
           <i class="fa-solid fa-indian-rupee-sign"></i>
-          <p class="payment-price">${deliveryPrice}</p>
+          <p class="payment-price js-payment-summary-delivery-price">${deliveryPrice}</p>
         </div>
       </div>
     </div>
@@ -89,7 +89,7 @@ export function renderPaymentSummary(){
       <div>
         <div class="payment-summary-price order-total">
           <i class="fa-solid fa-indian-rupee-sign"></i>
-          <p class="payment-price order-total-price">${orderTotal}</p>
+          <p class="payment-price order-total-price js-total-price">${orderTotal}</p>
         </div>
       </div>
     </div>

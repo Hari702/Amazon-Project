@@ -1,6 +1,7 @@
 import { renderOrderSummary } from "../../scripts/checkout/orderSummary.js";
 
 import { cart, loadFromStorage } from "../../data/cart.js";
+import { renderPaymentSummary } from "../../scripts/checkout/paymentSummary.js";
 
 
 
@@ -80,4 +81,20 @@ describe("test suite: display Order summary", () => {
         expect(document.querySelector(`.js-price-${cart[0].productid}`).innerHTML).toEqual("500")
 
     })
+
+    it("updating delivery option",()=>{
+        console.log(document.querySelector(".order-summary-container"))
+
+        document.querySelector(`.js-delivery-option-${cart[0].productid}-3`).click()
+
+        expect(document.querySelector(`.js-delivery-option-${cart[0].productid}-3`).checked).toEqual(true)
+
+        renderPaymentSummary()
+        expect(cart[0].deliveryOptionId).toEqual("3")
+
+        expect(document.querySelector(".js-payment-summary-delivery-price").innerHTML).toEqual("90")
+        expect(document.querySelector(".js-total-price").innerHTML).toEqual("1,309")
+    })
 })
+
+
