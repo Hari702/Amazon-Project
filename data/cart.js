@@ -3,6 +3,7 @@ import { getDeliveryOption } from "./deliveryOptions.js";
 export let cart;
 
 loadFromStorage()
+
 export function loadFromStorage(){
  cart =JSON.parse(localStorage.getItem("cartproduct"))
 
@@ -78,9 +79,9 @@ export function removeProductFromCart(productId){
 
 }
 
-export var num_quantity=0;
+// export var num_quantity=0;
 export function updateCartQuantity() {
-    num_quantity = 0;
+   let num_quantity = 0;
     cart.forEach((cartItem) => {
         num_quantity += cartItem.quantity
         // addNumQuantityToLocalStorage()
