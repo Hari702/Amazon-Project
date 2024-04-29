@@ -9,6 +9,35 @@ describe("test suite: add to cart", () => {
 
     beforeEach(() => {
         spyOn(localStorage, "setItem")
+        document.querySelector(".select-class").innerHTML=`<select class="js-quantity-selector-e43638ce-6aa0-4b85-b27f-e1d07eb678c6">
+        <option selected value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+        <option value="6">6</option>
+        <option value="7">7</option>
+        <option value="8">8</option>
+        <option value="9">9</option>
+        <option value="10">10</option>
+      </select>
+      <select class="js-quantity-selector-15b6fc6f-327a-4ec4-896f-486349e85a3d">
+        <option selected value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+        <option value="6">6</option>
+        <option value="7">7</option>
+        <option value="8">8</option>
+        <option value="9">9</option>
+        <option value="10">10</option>
+      </select>`
+    })
+
+    afterEach(()=>{
+        document.querySelector(".js-quantity-selector-e43638ce-6aa0-4b85-b27f-e1d07eb678c6").remove()
+        document.querySelector(".js-quantity-selector-15b6fc6f-327a-4ec4-896f-486349e85a3d").remove()
     })
 
     it("add a existing product to cart", () => {
