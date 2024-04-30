@@ -13,7 +13,7 @@ export function getProduct(productId){
 
 }
 
-class Product{
+export class Product{
 
   id;
   image;
@@ -33,14 +33,14 @@ class Product{
     return `images/ratings/rating-${this.rating.stars * 10}.png`
   }
 
-  getSizeChartLink(){
+  extraInfoHtml(){
     return " "
   }
 
 }
 
 
-class Clothing extends Product{
+export class Clothing extends Product{
     sizeChartLink
 
     constructor(productDetails){
@@ -49,12 +49,34 @@ class Clothing extends Product{
 
     }
 
-    getSizeChartLink(){
+    extraInfoHtml(){
       return `<a href="${this.sizeChartLink}" target="_blank">Size Chart</a>`
     }
 
 } 
 
+
+export class Appliance extends Product{
+
+  applianceInstructionsLink
+  applianceWarrantyLink
+
+  constructor(productDetails){
+    super(productDetails)
+    this.applianceInstructionsLink=productDetails.applianceInstructionsLink
+    console.log(this.applianceInstructionsLink)
+    this.applianceWarrantyLink=productDetails.applianceWarrantyLink
+    console.log(this.applianceWarrantyLink)
+  }
+
+  extraInfoHtml(){
+    return `<a href="${this.applianceInstructionsLink}" target="_blank">Instructions</a>
+    <a href="${this.applianceWarrantyLink}" target="_blank">Warranty</a>`
+  }
+
+
+
+}
 
 export const products = [
   {
@@ -116,7 +138,10 @@ export const products = [
       "toaster",
       "kitchen",
       "appliances"
-    ]
+    ],
+    type:"appliance",
+    applianceInstructionsLink:"images/appliance-instructions.png",
+    applianceWarrantyLink:"images/appliance-warranty.png"
   },
   {
     id: "3ebe75dc-64d2-4137-8860-1f5a963e534b",
@@ -606,7 +631,10 @@ export const products = [
       "coffeemakers",
       "kitchen",
       "appliances"
-    ]
+    ],
+    type:"appliance",
+    applianceInstructionsLink:"images/appliance-instructions.png",
+    applianceWarrantyLink:"images/appliance-warranty.png"
   },
   {
     id: "02e3a47e-dd68-467e-9f71-8bf6f723fdae",
@@ -666,7 +694,10 @@ export const products = [
       "food blenders",
       "kitchen",
       "appliances"
-    ]
+    ],
+    type:"appliance",
+    applianceInstructionsLink:"images/appliance-instructions.png",
+    applianceWarrantyLink:"images/appliance-warranty.png"
   },
   {
     id: "36c64692-677f-4f58-b5ec-0dc2cf109e27",
@@ -723,9 +754,15 @@ export const products = [
 
   }
 
+  else if(productDetails.type==="appliance"){
+    return new Appliance(productDetails)
+  }
+
   return new Product(productDetails)
 
 })
+
+console.log(products)
 
 
 
