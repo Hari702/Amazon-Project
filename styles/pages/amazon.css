@@ -35,6 +35,10 @@
     /* height:460px; */
 }
 
+.spacer{
+    flex-grow: 1;
+}
+
 
 @media  screen and (max-width:2000px) {
     .products-container{
