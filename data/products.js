@@ -13,6 +13,27 @@ export function getProduct(productId){
 
 }
 
+class Product{
+
+  id;
+  image;
+  name;
+  rating;
+  price;
+
+  constructor(productDetails){
+    this.id=productDetails.id
+    this.image=productDetails.image
+    this.name=productDetails.name
+    this.rating=productDetails.rating
+    this.price=productDetails.price
+  }
+
+  getStarsUrl(){
+    return `images/ratings/rating-${this.rating.stars * 10}.png`
+  }
+
+}
 
 
 
@@ -675,4 +696,11 @@ export const products = [
       "mens"
     ]
   }
-];
+].map((productDetails)=>{
+
+  return new Product(productDetails)
+
+})
+
+
+
