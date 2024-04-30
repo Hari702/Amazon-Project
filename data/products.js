@@ -729,3 +729,27 @@ export const products = [
 
 
 
+/*
+const date=new Date()
+
+console.log(date.toLocaleDateString())
+
+const product1={
+  a:10,
+  b:this.a
+}
+
+function logThis(){
+  console.log(this.name)
+}
+
+
+
+
+
+logThis.call(products[0])
+
+*/
+
+
+
