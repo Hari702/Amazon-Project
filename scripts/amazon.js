@@ -1,5 +1,5 @@
 import { products } from '../data/products.js'
-import { cart, addToCart,updateCartQuantity} from '../data/cart.js'
+import { cart } from '../data/cart-class.js'
 
 // generaing HTML code 
 let product_html = ""
@@ -62,7 +62,7 @@ document.querySelector(".products-container").innerHTML = product_html;
 
 let js_cart_btn = document.querySelectorAll(".js-add-to-cart-btn")
 
-let cartQuantity=updateCartQuantity();
+let cartQuantity=cart.updateCartQuantity();
 document.querySelector(".order-num").innerHTML = cartQuantity
 
 
@@ -72,8 +72,8 @@ js_cart_btn.forEach((button) => {
     button.addEventListener("click", () => {
         console.log(button.dataset.productId)
         let productid = button.dataset.productId
-        addToCart(productid);
-        let cartQuantity=updateCartQuantity();
+        cart.addToCart(productid);
+        let cartQuantity=cart.updateCartQuantity();
 document.querySelector(".order-num").innerHTML = cartQuantity
 
         

@@ -1,5 +1,5 @@
-import { cart, updateCartQuantity } from '../../data/cart.js';
-import { products,getProduct } from '../../data/products.js'
+import { cart } from '../../data/cart-class.js';
+import { getProduct } from '../../data/products.js'
 import { getDeliveryOption } from '../../data/deliveryOptions.js';
 import { MoneyToNumericFormat } from '../utils/money.js';
 
@@ -9,7 +9,7 @@ export function renderPaymentSummary(){
     let stringProductPrice
     let deliveryPrice=0
     let renderPaymentSummaryHtml=""
-    cart.forEach((cartItem)=>{
+    cart.cartItems.forEach((cartItem)=>{
         const product=getProduct(cartItem.productid)
 
         console.log(product)
@@ -43,7 +43,7 @@ export function renderPaymentSummary(){
 
     let orderTotal=tax+totalBeforeTax
     orderTotal=MoneyToNumericFormat(orderTotal)
-    let cartQuantity=updateCartQuantity()
+    let cartQuantity=cart.updateCartQuantity()
 
     renderPaymentSummaryHtml+=`<div class="payment-summary-heading">Order Summary</div>
     <div class="payment-summary-row">

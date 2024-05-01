@@ -1,6 +1,5 @@
-import { cart,removeProductFromCart,updateCartQuantity,updateQuantity,updateDeliveryOption} from '../../data/cart.js'
-import { products,getProduct } from '../../data/products.js'
-
+import { cart } from '../../data/cart-class.js'
+import { getProduct } from '../../data/products.js'
 import { deliveryOptions,getDeliveryOption } from '../../data/deliveryOptions.js'
 import { renderPaymentSummary } from './paymentSummary.js'
 import { calculateDeliveryDate } from '../../data/deliveryOptions.js'
@@ -8,7 +7,7 @@ import { calculateDeliveryDate } from '../../data/deliveryOptions.js'
 
 export function renderOrderSummary(){
     let cartProductHtml="";
-  cart.forEach((cartItem) => {
+  cart.cartItems.forEach((cartItem) => {
       const productId = cartItem.productid
      
 
@@ -107,7 +106,7 @@ export function renderOrderSummary(){
   
   
   function updationCartQuantity(){
-    let cartQuantity=updateCartQuantity();
+    let cartQuantity=cart.updateCartQuantity();
       document.querySelector(".items").innerHTML=`${cartQuantity} items`
   
   }
@@ -116,7 +115,7 @@ export function renderOrderSummary(){
   
     link.addEventListener("click",()=>{
       let productId=link.dataset.productId
-      removeProductFromCart(productId)
+      cart.removeProductFromCart(productId)
       let container=document.querySelector(`.ordered-product-container-${productId}`)
       console.log(container)
       container.remove()
@@ -166,7 +165,8 @@ export function renderOrderSummary(){
        quantityInput.style.display="none"
        saveQuantityInput.style.display="none" 
        updateBtn.style.display="inline"
-       updateQuantity(productId,newQuantity);
+       cart.updateQuantity(productId,newQuantity);
+       cart.updateCartQuantity()
        updationCartQuantity()
        renderPaymentSummary()
   
@@ -184,8 +184,7 @@ export function renderOrderSummary(){
       console.log(element)
     const{productId,deliveryOptionId}=element.dataset
     console.log(productId,deliveryOptionId)
-    updateDeliveryOption(productId,deliveryOptionId)
-    
+    cart.updateDeliveryOption(productId,deliveryOptionId)
     renderOrderSummary()
     renderPaymentSummary()
    

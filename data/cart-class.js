@@ -1,3 +1,5 @@
+import { getDeliveryOption } from "./deliveryOptions.js";
+
 class Cart{
      cartItems;
      #localStorageKey;
@@ -134,7 +136,7 @@ class Cart{
 }
 
 
-const cart=new Cart("cartproduct-oop")
+export const cart=new Cart("cartproduct-oop")
 const businessCart=new Cart("cartproduct-bussiness")
 
 
