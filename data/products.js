@@ -1,11 +1,11 @@
-export function getProduct(productId){
+export function getProduct(productId) {
   let matchingProduct
-  
+
   products.forEach((product) => {
 
-      if (product.id === productId) {
-          matchingProduct = product
-      }
+    if (product.id === productId) {
+      matchingProduct = product
+    }
 
   })
 
@@ -13,7 +13,7 @@ export function getProduct(productId){
 
 }
 
-export class Product{
+export class Product {
 
   id;
   image;
@@ -21,63 +21,105 @@ export class Product{
   rating;
   price;
 
-  constructor(productDetails){
-    this.id=productDetails.id
-    this.image=productDetails.image
-    this.name=productDetails.name
-    this.rating=productDetails.rating
-    this.price=productDetails.price
+  constructor(productDetails) {
+    this.id = productDetails.id
+    this.image = productDetails.image
+    this.name = productDetails.name
+    this.rating = productDetails.rating
+    this.price = productDetails.price
   }
 
-  getStarsUrl(){
+  getStarsUrl() {
     return `images/ratings/rating-${this.rating.stars * 10}.png`
   }
 
-  extraInfoHtml(){
+  extraInfoHtml() {
     return " "
   }
 
 }
 
 
-export class Clothing extends Product{
-    sizeChartLink
+export class Clothing extends Product {
+  sizeChartLink
 
-    constructor(productDetails){
-      super(productDetails)
-      this.sizeChartLink=productDetails.sizeChartLink
+  constructor(productDetails) {
+    super(productDetails)
+    this.sizeChartLink = productDetails.sizeChartLink
 
-    }
+  }
 
-    extraInfoHtml(){
-      return `<a href="${this.sizeChartLink}" target="_blank">Size Chart</a>`
-    }
+  extraInfoHtml() {
+    return `<a href="${this.sizeChartLink}" target="_blank">Size Chart</a>`
+  }
 
-} 
+}
 
 
-export class Appliance extends Product{
+export class Appliance extends Product {
 
   applianceInstructionsLink
   applianceWarrantyLink
 
-  constructor(productDetails){
+  constructor(productDetails) {
     super(productDetails)
-    this.applianceInstructionsLink=productDetails.applianceInstructionsLink
+    this.applianceInstructionsLink = productDetails.applianceInstructionsLink
     console.log(this.applianceInstructionsLink)
-    this.applianceWarrantyLink=productDetails.applianceWarrantyLink
+    this.applianceWarrantyLink = productDetails.applianceWarrantyLink
     console.log(this.applianceWarrantyLink)
   }
 
-  extraInfoHtml(){
+  extraInfoHtml() {
     return `<a href="${this.applianceInstructionsLink}" target="_blank">Instructions</a>
     <a href="${this.applianceWarrantyLink}" target="_blank">Warranty</a>`
   }
 
-
-
 }
 
+export let products = []
+
+
+
+
+export function loadProducts(fun) {
+  const xhr = new XMLHttpRequest()
+  xhr.addEventListener("load", () => {
+    products = JSON.parse(xhr.response).map((productDetails) => {
+
+      if (productDetails.type === "clothing") {
+
+        return new Clothing(productDetails)
+
+      }
+
+      else if (productDetails.type === "appliance") {
+        return new Appliance(productDetails)
+      }
+
+      return new Product(productDetails)
+
+    })
+    console.log(products)
+    fun()
+    
+  })
+
+  xhr.open("GET", "http://127.0.0.1:5000/products")
+  xhr.send()
+}
+
+loadProducts()
+
+
+
+
+
+
+
+
+
+
+/*
 export const products = [
   {
     id: "e43638ce-6aa0-4b85-b27f-e1d07eb678c6",
@@ -762,7 +804,7 @@ export const products = [
 
 })
 
-console.log(products)
+console.log(products)*/
 
 
 

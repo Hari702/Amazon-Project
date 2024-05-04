@@ -1,11 +1,13 @@
-import { products } from '../data/products.js'
+import { products, loadProducts } from '../data/products.js'
 import { cart } from '../data/cart-class.js'
 
 // generaing HTML code 
 let product_html = ""
 
-products.forEach((product) => {
-    product_html += ` <div class="product-container">
+loadProducts(renderProducts)
+function renderProducts() {
+    products.forEach((product) => {
+        product_html += ` <div class="product-container">
    <div class="product-image-container">
        <img  class="product-image" src="${product.image}">
    </div>
@@ -46,64 +48,67 @@ products.forEach((product) => {
 </div>`
 
 
-})
-
-console.log(product_html)
-
-// console.log(product_html)
-
-// to insert the html code using DOM
-
-document.querySelector(".products-container").innerHTML = product_html;
-
-// console.log(products_container)
-
-
-
-let js_cart_btn = document.querySelectorAll(".js-add-to-cart-btn")
-
-let cartQuantity=cart.updateCartQuantity();
-document.querySelector(".order-num").innerHTML = cartQuantity
-
-
-js_cart_btn.forEach((button) => {
-
-    let addedMessageTimeout;
-    button.addEventListener("click", () => {
-        console.log(button.dataset.productId)
-        let productid = button.dataset.productId
-        cart.addToCart(productid);
-        let cartQuantity=cart.updateCartQuantity();
-document.querySelector(".order-num").innerHTML = cartQuantity
-
-        
-        // when we click add cart button added with color green will display and when click add cart button within 3 sec continuously added popup will display 3 sec and display,will not  continue to previous timeout it will start with new timeout
-        if (addedMessageTimeout) {
-            console.log("hello")
-            clearInterval(addedMessageTimeout)
-        }
-        let addedmessage = document.querySelector(`.js-added-to-cart-${productid}`)
-        addedmessage.classList.add("added-to-cart-visible")
-
-        const closure_id = setTimeout(() => {
-            addedmessage.classList.remove("added-to-cart-visible")
-        }, 3000)
-
-
-        addedMessageTimeout=closure_id
-
-        // displayAdded(productid);
-
-        console.log(button)
-
     })
 
 
-    // console.log(addedMessageTimeout)
-    // })
+    console.log(product_html)
 
-})
+    // console.log(product_html)
 
+    // to insert the html code using DOM
+
+    document.querySelector(".products-container").innerHTML = product_html;
+
+    // console.log(products_container)
+
+
+
+    let js_cart_btn = document.querySelectorAll(".js-add-to-cart-btn")
+
+    let cartQuantity = cart.updateCartQuantity();
+    document.querySelector(".order-num").innerHTML = cartQuantity
+
+
+    js_cart_btn.forEach((button) => {
+
+        let addedMessageTimeout;
+        button.addEventListener("click", () => {
+            console.log(button.dataset.productId)
+            let productid = button.dataset.productId
+            cart.addToCart(productid);
+            let cartQuantity = cart.updateCartQuantity();
+            document.querySelector(".order-num").innerHTML = cartQuantity
+
+
+            // when we click add cart button added with color green will display and when click add cart button within 3 sec continuously added popup will display 3 sec and display,will not  continue to previous timeout it will start with new timeout
+            if (addedMessageTimeout) {
+                console.log("hello")
+                clearInterval(addedMessageTimeout)
+            }
+            let addedmessage = document.querySelector(`.js-added-to-cart-${productid}`)
+            addedmessage.classList.add("added-to-cart-visible")
+
+            const closure_id = setTimeout(() => {
+                addedmessage.classList.remove("added-to-cart-visible")
+            }, 3000)
+
+
+            addedMessageTimeout = closure_id
+
+            // displayAdded(productid);
+
+            console.log(button)
+
+        })
+
+
+        // console.log(addedMessageTimeout)
+        // })
+
+    })
+
+   
+}
 
 
 
