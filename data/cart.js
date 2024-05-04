@@ -140,6 +140,20 @@ export function updateDeliveryOption(productId,deliveryOptionId){
   addCartToLocalStorage()
 }
 
+export function loadCartFetch(){
+    const promise1=fetch("https://supersimplebackend.dev/cart").then((response)=>{
+        return response.text()
+    }).then((value)=>{
+        console.log(value)
+    })
+
+    return promise1
+}
+
+loadCartFetch()
+
+
+
 
 export function loadCart(fun) {
     const xhr = new XMLHttpRequest()

@@ -64,9 +64,9 @@ export class Appliance extends Product {
   constructor(productDetails) {
     super(productDetails)
     this.applianceInstructionsLink = productDetails.applianceInstructionsLink
-    console.log(this.applianceInstructionsLink)
+
     this.applianceWarrantyLink = productDetails.applianceWarrantyLink
-    console.log(this.applianceWarrantyLink)
+
   }
 
   extraInfoHtml() {
@@ -77,6 +77,41 @@ export class Appliance extends Product {
 }
 
 export let products = []
+
+
+
+export function loadProductsFetch() {
+
+  const promise = fetch("http://127.0.0.1:5000/products").then((response) => {
+    return response.json()
+  }).then((productsDetails) => {
+
+
+    products = productsDetails.map((productDetails) => {
+
+      if (productDetails.type === "clothing") {
+
+        return new Clothing(productDetails)
+
+      }
+
+      else if (productDetails.type === "appliance") {
+        return new Appliance(productDetails)
+      }
+
+      return new Product(productDetails)
+    })
+
+
+
+
+  })
+  return promise
+}
+
+loadProductsFetch().then(() => {
+  console.log("hello")
+})
 
 
 
@@ -101,10 +136,10 @@ export function loadProducts(fun) {
     })
 
     console.log("load products")
-    
+
     fun()
-    
-    
+
+
   })
 
   xhr.open("GET", "http://127.0.0.1:5000/products")

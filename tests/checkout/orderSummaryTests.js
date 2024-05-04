@@ -1,14 +1,16 @@
 import { renderOrderSummary } from "../../scripts/checkout/orderSummary.js";
 import { cart } from "../../data/cart-class.js";
 import { renderPaymentSummary } from "../../scripts/checkout/paymentSummary.js";
-import { loadProducts } from "../../data/products.js";
+import { loadProducts,loadProductsFetch } from "../../data/products.js";
 
 
 
 describe("test suite: display Order summary", () => {
 
     beforeAll((done)=>{
-        loadProducts(done);
+        loadProductsFetch().then(()=>{
+            done()
+        })
         
     })
 
