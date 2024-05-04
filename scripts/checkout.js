@@ -5,6 +5,25 @@ import { loadCart,loadCartFetch } from '../data/cart.js';
 // import "../data/backend-practice.js"
 
 
+
+
+async function loadPage(){
+
+    console.log("Async")
+    await loadProductsFetch();
+    await loadCartFetch();
+    renderOrderSummary();
+    renderPaymentSummary();
+    
+}
+
+loadPage().then(()=>{
+    console.log("Async_1")
+})
+
+
+
+/*
 Promise.all([
     loadProductsFetch(),
     loadCartFetch()
@@ -15,6 +34,7 @@ Promise.all([
     renderPaymentSummary()
 
 })
+*/
 
 
 

@@ -1,10 +1,14 @@
-import { products, loadProducts } from '../data/products.js'
+import { products, loadProducts,loadProductsFetch } from '../data/products.js'
 import { cart } from '../data/cart-class.js'
 
 // generaing HTML code 
 let product_html = ""
 
-loadProducts(renderProducts)
+// loadProducts(renderProducts)
+loadProductsFetch().then(()=>{
+    renderProducts()
+})
+
 function renderProducts() {
     products.forEach((product) => {
         product_html += ` <div class="product-container">

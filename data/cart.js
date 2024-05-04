@@ -150,7 +150,7 @@ export function loadCartFetch(){
     return promise1
 }
 
-loadCartFetch()
+// loadCartFetch()
 
 
 
@@ -159,7 +159,7 @@ export function loadCart(fun) {
     const xhr = new XMLHttpRequest()
     xhr.addEventListener("load", () => {
       
-      console.log("load cart")
+    //   console.log("load cart")
       fun()
       
     })

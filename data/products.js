@@ -103,15 +103,13 @@ export function loadProductsFetch() {
     })
 
 
-
-
+    console.log("loadproducts")
+    
   })
   return promise
 }
 
-loadProductsFetch().then(() => {
-  console.log("hello")
-})
+
 
 
 
