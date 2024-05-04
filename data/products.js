@@ -105,7 +105,9 @@ export function loadProductsFetch() {
 
     console.log("loadproducts")
     
-  })
+  })/*.catch(()=>{
+    console.log("unexpected error, please try again")
+  })*/
   return promise
 }
 
@@ -132,6 +134,10 @@ export function loadProducts(fun) {
       return new Product(productDetails)
 
     })
+
+  xhr.addEventListener("error",()=>{
+    console.log("unexpected error, please try again")
+  })
 
     console.log("load products")
 

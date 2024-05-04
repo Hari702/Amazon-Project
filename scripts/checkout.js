@@ -8,10 +8,16 @@ import { loadCart,loadCartFetch } from '../data/cart.js';
 
 
 async function loadPage(){
-
+   try{
+    // throw "error"
     console.log("Async")
     await loadProductsFetch();
     await loadCartFetch();
+   }
+   catch(error){
+      console.log("unexpected error, please try again")
+   }
+    
     renderOrderSummary();
     renderPaymentSummary();
     
