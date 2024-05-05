@@ -2,6 +2,7 @@ import { cart } from '../../data/cart-class.js';
 import { getProduct } from '../../data/products.js'
 import { getDeliveryOption } from '../../data/deliveryOptions.js';
 import { MoneyToNumericFormat } from '../utils/money.js';
+import { addOrders } from '../../data/orders.js';
 
 
 export function renderPaymentSummary(){
@@ -42,6 +43,7 @@ export function renderPaymentSummary(){
     console.log(stringTax)
 
     let orderTotal=tax+totalBeforeTax
+    let orderTotalBackEnd=orderTotal
     orderTotal=MoneyToNumericFormat(orderTotal)
     let cartQuantity=cart.updateCartQuantity()
 
@@ -93,10 +95,44 @@ export function renderPaymentSummary(){
         </div>
       </div>
     </div>
-    <button class="place-order-btn">Place your order</button>`
+    <button class="place-order-btn js-place-order-btn">Place your order</button>`
   
 
     document.querySelector(".payment-summary-container").innerHTML=renderPaymentSummaryHtml
+
+   
     
     // console.log("payment summary")
+
+
+    document.querySelector(".js-place-order-btn").addEventListener("click",async ()=>{
+      try{
+        const response=await fetch("http://127.0.0.1:5000/order",{
+        method:'POST',
+        headers:{
+          'Content-Type':"application/json"
+        },
+        body:JSON.stringify({
+          cart:cart,
+          orderTotal:orderTotalBackEnd
+        })
+      })
+
+      const orders=await response.json()
+
+      console.log(orders)
+      addOrders(orders)
+      }
+      catch(error){
+        console.log("Unexpected error,try again later")
+
+      }
+      
+      window.location.href="orders.html"
+
+
+
+
+    })
 }
+
