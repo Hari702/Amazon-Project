@@ -1,17 +1,4 @@
-export function getProduct(productId) {
-  let matchingProduct
 
-  products.forEach((product) => {
-
-    if (product.id === productId) {
-      matchingProduct = product
-    }
-
-  })
-
-  return matchingProduct
-
-}
 
 export class Product {
 
@@ -152,6 +139,22 @@ export function loadProducts(fun) {
 
 
 
+
+export function getProduct(productId) {
+  let matchingProduct
+
+  products.forEach((product) => {
+    if (product.id === productId) {
+      matchingProduct = product
+    }
+
+  })
+
+  return matchingProduct
+
+}
+
+// getProduct("3ebe75dc-64d2-4137-8860-1f5a963e534b")
 
 
 

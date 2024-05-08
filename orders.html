@@ -1,50 +1,117 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <!-- google font
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- font awsome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <!-- css -->
+    <link rel="stylesheet" href="styles\shared\amazon-header.css">
+    <link rel="stylesheet" href="styles\pages\orders.css">
+    <link rel="stylesheet" href="styles\shared\general.css">
 </head>
+
 <body>
-  <!-- header -->
-  <div class="amazon-header">
-    <div class="amazon-header-left-section">
+    <!-- header -->
+    <div class="amazon-header">
+        <div class="amazon-header-left-section">
 
-        <a class="amazon-logo-link header-link">
-            <img class="amazon-logo" src="images/amazon-logo-white.png">
-            <img class="amazon-mobile-logo" src="images/amazon-mobile-logo-white.png">
-        </a>
+            <a class="amazon-logo-link header-link" href="amazon.html">
+                <img class="amazon-logo" src="images/amazon-logo-white.png">
+                <img class="amazon-mobile-logo" src="images/amazon-mobile-logo-white.png">
+            </a>
 
 
+        </div>
+
+        <div class="amazon-header-middle-section">
+
+            <input class="header-input" type="text" placeholder="Search">
+            <button class="search-button">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </button>
+
+        </div>
+
+        <div class="amazon-header-right-section">
+
+            <a class="header-order-link header-link">
+                <p class="return">Return</p>
+                <p class="order">& Orders </p>
+            </a>
+
+            <a class="header-cart-link header-link" href="checkout.html">
+
+                <img class="cart-icon" src="images/icons/cart-icon.png">
+                <span class="order-num"></span>
+
+                <div class="cart">Cart</div>
+            </a>
+
+        </div>
     </div>
 
-    <div class="amazon-header-middle-section">
+    <div class="main">
+        <h2>Your Orders</h2>
+        <div class="order-grid">
+            <!-- <div class="order-container">
+                <div class="order-header">
+                    <div class="left-section">
+                        <div class="order-date">
+                            <div class="order-header-label">Order Placed:</div>
+                            <div >May 6</div>
+                        </div>
+                        <div class="order-total">
+                            <div
+                            class="order-header-label">Total:</div>
+                            <div class="order-total-value-container">
+                                <i class="fa-solid fa-indian-rupee-sign"></i>
+                                <div class="order-total-value">1,000</div>
+                            </div>
+                        </div>
+                    </div>
 
-        <input class="header-input" type="text" placeholder="Search">
-        <button class="search-button">
-            <i class="fa-solid fa-magnifying-glass"></i>
-        </button>
+                    <div class="right-section">
+                        <div class="order-header-label">Order Id:</div>
+                        <div>77a845b1-16ed-4eac-bdf9-5b591882113d</div>
+                    </div>
+                </div>
+                <div class="order-details">
+                    <div class="product-image-container">
+                        <img src="images/products/countertop-blender-64-oz.jpg">
+                    </div>
+                    <div class="poroduct-name-details">
+                        <div class="product-name">Countertop Blender - 64oz, 1400 Watts</div>
+                        <div class="product-arriving-date">Arriving on: May 4</div>
+                        <div class="product-quantity">Quantity: 1</div>
+                        <button class="product-buy-again">
+                            <img src="images\icons\buy-again.png">
+                            <span class="product-buy-again-text">Buy it again </span>
+                        </button>
+                    </div>
 
+                    <div class="track-package-container">
+                        <button class="track-package-button">Track Package</button>
+                    </div>
+
+                </div>
+            </div> -->
+
+        </div>
     </div>
 
-    <div class="amazon-header-right-section">
-
-        <a class="header-order-link header-link">
-            <p class="return">Return</p>
-            <p class="order">& Orders </p>
-        </a>
-
-        <a class="header-cart-link header-link" href="checkout.html">
-
-            <img class="cart-icon" src="images/icons/cart-icon.png">
-            <span class="order-num"></span>
-
-            <div class="cart">Cart</div>
-        </a>
-
-    </div>
-
-</div>
-  
+    <script src="scripts/orders.js" type="module"></script> 
+    <script src="https://unpkg.com/dayjs-plugin-utc"></script>
 </body>
+
 </html>

@@ -125,7 +125,8 @@
  /* cursor: pointer;
   width: 200px;*/
   color: white;
-  border: 1px solid hsl(214, 27%, 10%)
+  border: 1px solid hsl(214, 27%, 10%);
+  text-decoration: none;
   /* padding: 6px; */
 }
 

@@ -4,52 +4,56 @@ import { getDeliveryOption } from '../../data/deliveryOptions.js';
 import { MoneyToNumericFormat } from '../utils/money.js';
 import { addOrders } from '../../data/orders.js';
 
+export let orders1=[]
+export function renderPaymentSummary() {
+  let productPrice = 0;
+  let stringProductPrice = 0
+  let deliveryPrice = 0
+  let renderPaymentSummaryHtml = ""
+  cart.cartItems.forEach((cartItem) => {
+    const product = getProduct(cartItem.productid)
 
-export function renderPaymentSummary(){
-    let productPrice=0;
-    let stringProductPrice
-    let deliveryPrice=0
-    let renderPaymentSummaryHtml=""
-    cart.cartItems.forEach((cartItem)=>{
-        const product=getProduct(cartItem.productid)
+    console.log(product)
+    console.log(cartItem)
 
-        console.log(product)
-        console.log(cartItem)
+    console.log(product.price, cartItem.quantity)
+    let stringPrice = product.price
+    stringPrice = stringPrice.replace(",", "")
+    let intPrice = parseInt(stringPrice)
+    console.log(intPrice, typeof intPrice)
+    productPrice += intPrice * cartItem.quantity
 
-        console.log(product.price,cartItem.quantity)
-        let stringPrice=product.price
-        stringPrice=stringPrice.replace(",","")
-        let intPrice=parseInt(stringPrice)
-        console.log(intPrice,typeof intPrice)
-        productPrice+=intPrice * cartItem.quantity
-        stringProductPrice=MoneyToNumericFormat(productPrice)
-        const deliveryOptionId=cartItem.deliveryOptionId
+    console.log(productPrice)
+    stringProductPrice = MoneyToNumericFormat(productPrice)
 
-        let deliveryOption=getDeliveryOption(deliveryOptionId)
-        console.log(deliveryOption)
+    const deliveryOptionId = cartItem.deliveryOptionId
 
-        deliveryPrice+=deliveryOption.price
-      })
+    let deliveryOption = getDeliveryOption(deliveryOptionId)
+    console.log(deliveryOption)
 
-    console.log(stringProductPrice)
-    console.log(deliveryPrice)
-    let totalBeforeTax=productPrice+deliveryPrice
+    deliveryPrice += deliveryOption.price
+  })
 
-    let stringTotalBeforeTax=MoneyToNumericFormat(totalBeforeTax)
-    console.log(stringTotalBeforeTax)
+  console.log(stringProductPrice)
+  console.log(deliveryPrice)
+  let totalBeforeTax = productPrice + deliveryPrice
 
-    let tax=Math.round(totalBeforeTax*0.1)
-    let stringTax=MoneyToNumericFormat(tax)
-    console.log(stringTax)
+  let stringTotalBeforeTax = MoneyToNumericFormat(totalBeforeTax)
+  console.log(stringTotalBeforeTax)
 
-    let orderTotal=tax+totalBeforeTax
-    let orderTotalBackEnd=orderTotal
-    orderTotal=MoneyToNumericFormat(orderTotal)
-    let cartQuantity=cart.updateCartQuantity()
+  let tax = Math.round(totalBeforeTax * 0.1)
+  let stringTax = MoneyToNumericFormat(tax)
+  console.log(stringTax)
 
-    renderPaymentSummaryHtml+=`<div class="payment-summary-heading">Order Summary</div>
+  let orderTotal = tax + totalBeforeTax
+  orderTotal = MoneyToNumericFormat(orderTotal)
+  let orderTotalBackEnd = orderTotal
+  let cartQuantity = cart.updateCartQuantity()
+  // <div>Item (${cartQuantity}):</div>
+
+  renderPaymentSummaryHtml += `<div class="payment-summary-heading">Order Summary</div>
     <div class="payment-summary-row">
-      <div>Item (${cartQuantity}):</div>
+      <div>Item (<span class="order-num">${cartQuantity}</span>):</div>
       <div>
         <div class="payment-summary-price">
           <i  class="fa-solid fa-indian-rupee-sign icon-payment"></i>
@@ -95,44 +99,43 @@ export function renderPaymentSummary(){
         </div>
       </div>
     </div>
-    <button class="place-order-btn js-place-order-btn">Place your order</button>`
+    <button  class="place-order-btn js-place-order-btn">Place your order</button>`
+
+
+  document.querySelector(".payment-summary-container").innerHTML = renderPaymentSummaryHtml
+
+
+
+  // console.log("payment summary")
+
   
-
-    document.querySelector(".payment-summary-container").innerHTML=renderPaymentSummaryHtml
-
-   
-    
-    // console.log("payment summary")
-
-
-    document.querySelector(".js-place-order-btn").addEventListener("click",async ()=>{
-      try{
-        const response=await fetch("http://127.0.0.1:5000/order",{
-        method:'POST',
-        headers:{
-          'Content-Type':"application/json"
+  document.querySelector(".js-place-order-btn").addEventListener("click", async () => {
+    try {
+      const response = await fetch("http://127.0.0.1:5000/order", {
+        method: 'POST',
+        headers: {
+          'Content-Type': "application/json"
         },
-        body:JSON.stringify({
-          cart:cart,
-          orderTotal:orderTotalBackEnd
+        body: JSON.stringify({
+          cart: cart,
+          orderTotal: orderTotalBackEnd
         })
       })
 
-      const orders=await response.json()
-
+      const orders = await response.json()
       console.log(orders)
       addOrders(orders)
-      }
-      catch(error){
-        console.log("Unexpected error,try again later")
+      localStorage.removeItem("cartproduct-oop")
+    }
+    catch (error) {
+      console.log(error)
 
-      }
-      
-      window.location.href="orders.html"
+    }
+
+    window.location.href = "orders.html"
+
+  })
 
 
-
-
-    })
 }
 

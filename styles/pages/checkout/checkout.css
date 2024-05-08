@@ -301,6 +301,7 @@ body{
   border-radius: 10px;
   border: none;
   background-color:  hsl(50,100%,54%);
+  cursor: pointer;
 }
 
 .quantity-input{
