@@ -1,81 +1,65 @@
-.main {
+*{
+  padding: 0;
+  margin: 0;
+}
+.tracking-main{
   max-width: 850px;
-  margin-top: 90px;
-  margin-bottom: 100px;
-  padding-left: 30px;
-  padding-right: 30px;
-
-  /* margin-left: auto;
-     margin-right auto;
-     Is a trick for centering an element horizontally
-     without needing a container. */
+  margin-top: 80px;
   margin-left: auto;
   margin-right: auto;
+  padding-left: 40px;
+  padding-right: 40px;
 }
 
-.back-to-orders-link {
+.tracking-orders-link{
   display: inline-block;
   margin-bottom: 30px;
+  color: hsl(203,43%,52%);
+  cursor: pointer;
 }
 
-.delivery-date {
-  font-size: 25px;
+.tracking-orders-link:hover{
+  color: hsl(35,97%,45%);
+}
+
+.tracking-arriving-date{
+  font-size: 1.5rem;
   font-weight: 700;
   margin-bottom: 10px;
 }
 
-.product-info {
-  margin-bottom: 3px;
+.tracking-product-name{
+  margin-bottom: 5px;
 }
 
-.product-image {
-  max-width: 150px;
-  max-height: 150px;
-  margin-top: 25px;
-  margin-bottom: 50px;
+.tracking-product-image{
+  height: 150px;
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 
-.progress-labels-container {
+.tracking-details-container{
   display: flex;
   justify-content: space-between;
-  font-size: 20px;
-  font-weight: 500;
-  margin-bottom: 15px;
+  font-weight: 700;
+  font-size: larger;
 }
 
-.current-status {
-  color: rgb(6, 125, 98);
-}
-
-@media (max-width: 575px) {
-  .progress-labels-container {
-    font-size: 16px;
-  }
-}
-
-@media (max-width: 450px) {
-  .progress-labels-container {
-    flex-direction: column;
-    margin-bottom: 5px;
-  }
-
-  .progress-label {
-    margin-bottom: 3px;
-  }
-}
-
-.progress-bar-container {
+.delivery-progress{
+  margin-top: 15px;
   height: 25px;
   width: 100%;
-
-  border: 1px solid rgb(200, 200, 200);
-  border-radius: 50px;
-  overflow: hidden;
+  border-radius: 20px;
+  border: 1px solid hsl(180, 5%, 84%) ;
 }
 
-.progress-bar {
-  height: 100%;
+.delivery-progress-inner{
+  height: 25px;
+  max-width:100%;
   background-color: green;
-  border-radius: 50px;
-  width: 50%;
+  border-radius: 20px;
+}
+
+.progress-label-current-status{
+  color: green;
 }

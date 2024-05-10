@@ -17,5 +17,18 @@ function saveToStorage() {
 console.log(orders)
 
 
+export function getOrders(orderId){
+    let matchingOrder
+
+    orders.forEach((order)=>{
+        if(order.id===orderId){
+             matchingOrder=order
+        }
+    })
+
+    return matchingOrder
+
+}
+
 
 

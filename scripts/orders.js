@@ -5,6 +5,8 @@ import { loadProductsFetch } from '../data/products.js'
 import { cart } from '../data/cart-class.js'
 
 
+
+
 async function loadPage() {
 
     await loadProductsFetch()
@@ -22,7 +24,7 @@ async function loadPage() {
         console.log(`orderTime ${order.orderTime}`)
         
         dayjs.extend(dayjsPluginUTC.default)
-        let orderDate=dayjs(order.orderTime)
+        let orderDate=dayjs(order.orderTime).utcOffset('+05:30')
         console.log(orderDate)
 
          orderDate = dayjs(order.orderTime).format
@@ -89,7 +91,9 @@ async function loadPage() {
         </div>
 
         <div class="track-package-container">
-            <button class="track-package-button">Track Package</button>
+          <a href="tracking.html?orderId=${order.id}&productId=${orderProduct.productid}">
+            <button  class="track-package-button">Track Package</button>
+          </a>  
         </div>`
 
 
@@ -148,6 +152,9 @@ async function loadPage() {
         })
 
     })
+
+
+    
 
     
 }
