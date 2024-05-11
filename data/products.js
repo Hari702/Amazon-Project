@@ -7,6 +7,7 @@ export class Product {
   name;
   rating;
   price;
+  keywords;
 
   constructor(productDetails) {
     this.id = productDetails.id
@@ -14,6 +15,7 @@ export class Product {
     this.name = productDetails.name
     this.rating = productDetails.rating
     this.price = productDetails.price
+    this.keywords=productDetails.keywords
   }
 
   getStarsUrl() {
@@ -28,17 +30,24 @@ export class Product {
 
 
 export class Clothing extends Product {
-  sizeChartLink
+  sizeChartLink;
+  variations;
+  variationsImage
 
   constructor(productDetails) {
     super(productDetails)
     this.sizeChartLink = productDetails.sizeChartLink
-
+    this.variations=productDetails.variations
+    this.variationsImage=productDetails.variationsImage
+    console.log(this.variations)
+    console.log(this.variationsImage)
   }
 
   extraInfoHtml() {
     return `<a href="${this.sizeChartLink}" target="_blank">Size Chart</a>`
   }
+ 
+
 
 }
 

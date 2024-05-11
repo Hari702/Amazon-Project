@@ -1,5 +1,6 @@
 import { products, loadProducts,loadProductsFetch } from '../data/products.js'
 import { cart } from '../data/cart-class.js'
+import { renderHeaderHtml } from './shared/amazon-header.js'
 
 // generaing HTML code 
 let product_html = ""
@@ -9,8 +10,38 @@ loadProductsFetch().then(()=>{
     renderProducts()
 })
 
+
+renderHeaderHtml()
+
+
+
 function renderProducts() {
-    products.forEach((product) => {
+
+    const url=new URL(window.location.href)
+
+    const search=url.searchParams.get("search")
+
+    let filteredProduct=products
+
+    if(search){
+        filteredProduct=filteredProduct.filter((product)=>{
+            let matchingKeyword=false
+            product.keywords.forEach((keyword)=>{
+               if(keyword.toLowerCase().includes(search)){
+                  matchingKeyword=true
+               }
+            })
+            document.querySelector(".js-header-input").value=search
+            document.querySelector(".js-mobile-header-input").value=search
+            return product.name.toLowerCase().includes(search) || matchingKeyword
+            
+        })
+    }
+
+    console.log(filteredProduct)
+
+
+    filteredProduct.forEach((product) => {
         product_html += ` <div class="product-container">
    <div class="product-image-container">
        <img  class="product-image" src="${product.image}">
@@ -55,17 +86,7 @@ function renderProducts() {
     })
 
 
-    console.log(product_html)
-
-    // console.log(product_html)
-
-    // to insert the html code using DOM
-
     document.querySelector(".products-container").innerHTML = product_html;
-
-    // console.log(products_container)
-
-
 
     let js_cart_btn = document.querySelectorAll(".js-add-to-cart-btn")
 
@@ -81,7 +102,7 @@ function renderProducts() {
             let productid = button.dataset.productId
             cart.addToCart(productid);
             let cartQuantity = cart.updateCartQuantity();
-            document.querySelector(".order-num").innerHTML = cartQuantity
+            document.querySelector(".order-num").innerHTML = cartQuantity    
 
 
             // when we click add cart button added with color green will display and when click add cart button within 3 sec continuously added popup will display 3 sec and display,will not  continue to previous timeout it will start with new timeout

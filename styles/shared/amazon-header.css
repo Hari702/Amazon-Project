@@ -27,6 +27,36 @@
 
 }
 
+.amazon-header-mobile{
+  height: 40px;
+  margin-bottom: 10px;
+  background-color: hsl(214, 27%, 10%);
+  display: none;
+  position: fixed;
+  top:60px;
+  left:0;
+  right: 0;
+}
+
+.amazon-header-mobile-input-section{
+  display: flex;
+  margin-left: 20px;
+  margin-right: 20px;
+
+}
+
+.header-mobile-input{
+  width: 100%;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  border: none;
+  padding: 10px;
+
+}
+
+.header-mobile-input:focus{
+  outline: none;
+}
 
 
 .amazon-header-left-section {
@@ -50,7 +80,7 @@
   display: none;
 }
 
-@media screen and (max-width:600px) {
+/* @media screen and (max-width:600px) {
   .amazon-mobile-logo {
     display: block;
     width: 35px;
@@ -60,7 +90,7 @@
   .amazon-logo {
     display: none;
   }
-}
+} */
 
 .amazon-logo-link {
   display: inline-block;
@@ -196,4 +226,14 @@
 .header-link:hover{
   border: 1px solid white;
 
+}
+
+@media  screen and (max-width:600px) {
+
+  .amazon-header-mobile{
+    display: block;
+  }
+  .amazon-header-middle-section{
+    display: none;
+  }
 }

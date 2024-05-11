@@ -80,6 +80,7 @@
 @media  screen and (max-width:600px) {
     .products-container{
         grid-template-columns: repeat(2,1fr);
+        margin-top: 100px;
     }
     
 } 
@@ -91,6 +92,7 @@
     }
     
 } 
+
 
 
 

@@ -49,6 +49,8 @@ export function renderPaymentSummary() {
   orderTotal = MoneyToNumericFormat(orderTotal)
   let orderTotalBackEnd = orderTotal
   let cartQuantity = cart.updateCartQuantity()
+  console.log(cart.cartItems.length)
+  let disabled=`${cart.cartItems.length===0 ? "disabled": " "}`
   // <div>Item (${cartQuantity}):</div>
 
   renderPaymentSummaryHtml += `<div class="payment-summary-heading">Order Summary</div>
@@ -99,7 +101,7 @@ export function renderPaymentSummary() {
         </div>
       </div>
     </div>
-    <button  class="place-order-btn js-place-order-btn">Place your order</button>`
+    <button ${disabled}  class="place-order-btn js-place-order-btn">Place your order</button>`
 
 
   document.querySelector(".payment-summary-container").innerHTML = renderPaymentSummaryHtml

@@ -3,10 +3,10 @@ import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js'
 import { getProduct } from '../data/products.js'
 import { loadProductsFetch } from '../data/products.js'
 import { cart } from '../data/cart-class.js'
+import { renderHeaderHtml } from "./shared/amazon-header.js";
 
 
-
-
+renderHeaderHtml()
 async function loadPage() {
 
     await loadProductsFetch()

@@ -21,294 +21,33 @@
     <!-- amazon-header -->
 
     <div class="amazon-header">
-        <div class="amazon-header-left-section">
+        <!-- Generating HTML using js -->
+    </div>
 
-            <a class="amazon-logo-link header-link">
-                <img class="amazon-logo" src="images/amazon-logo-white.png">
-                <img class="amazon-mobile-logo" src="images/amazon-mobile-logo-white.png">
-            </a>
+    <div class="amazon-header-mobile">
+        <div class="amazon-header-mobile-input-section">
 
-
-        </div>
-
-        <div class="amazon-header-middle-section">
-
-            <input class="header-input" type="text" placeholder="Search">
-            <button class="search-button">
+            <input class="header-mobile-input js-mobile-header-input" type="text" placeholder="Search">
+            <button class="search-button js-mobile-search-button">
                 <i class="fa-solid fa-magnifying-glass"></i>
             </button>
-
+        
         </div>
-
-        <div class="amazon-header-right-section">
-
-            <a class="header-order-link header-link" href="orders.html">
-                <p class="return">Return</p>
-                <p class="order">& Orders </p>
-            </a>
-
-            <a class="header-cart-link header-link" href="checkout.html">
-
-                <img class="cart-icon" src="images/icons/cart-icon.png">
-                <span class="order-num"></span>
-
-                <div class="cart">Cart</div>
-            </a>
-
-        </div>
-
     </div>
 
     <!-- products -->
 
     <div class="products-container">
-        <!-- <div class="product-container">
-            <div class="product-image-container">
-                <img  class="product-image" src="images/products/athletic-cotton-socks-6-pairs.jpg">
-            </div>
-            <p class="product-name limit-text-to-2-lines">
-                Black and Gray Athletic Cotton Socks - 6 Pairs
-            </p>
-            <div class="product-rating-container">
-                <img class="product-rating-stars" src="images/ratings/rating-45.png">
-                <p class="product-rating-num">87</p>
-            </div>
-            <div class="product-price">
-                <i class="fa-solid fa-indian-rupee-sign"></i>
-                <p>100</p>
-            </div>
-            <div class="product-quantity">
-                <select>
-                   <option selected value="1">1</option>
-           <option value="2">2</option>
-           <option value="3">3</option>
-           <option value="4">4</option>
-           <option value="5">5</option>
-           <option value="6">6</option>
-           <option value="7">7</option>
-           <option value="8">8</option>
-           <option value="9">9</option>
-           <option value="10">10</option>
-                </select>
-            </div>
-            <button class="Add-to-Cart-btn">Add to Cart</button>
-        </div>
-
-        <div class="product-container">
-            <div class="product-image-container">
-                <img  class="product-image" src="images/products/intermediate-composite-basketball.jpg">
-            </div>
-            <p class="product-name limit-text-to-2-lines">
-                Intermediate Size Basketball
-            </p>
-            <div class="product-rating-container">
-                <img class="product-rating-stars" src="images/ratings/rating-40.png">
-                <p class="product-rating-num">147</p>
-            </div>
-            <div class="product-price">
-                <i class="fa-solid fa-indian-rupee-sign"></i>
-                <p>500</p>
-            </div>
-            <div class="product-quantity">
-                <select>
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
-                    <option>6</option>
-                    <option>7</option>
-                    <option>8</option>
-                    <option>9</option>
-                    <option>10</option>
-                </select>
-            </div>
-            <button class="Add-to-Cart-btn">Add to Cart</button>
-        </div>
-
-        <div class="product-container">
-            <div class="product-image-container">
-                <img  class="product-image" src="images/products/adults-plain-cotton-tshirt-2-pack-teal.jpg">
-            </div>
-            <p class="product-name limit-text-to-2-lines">
-                Adults Plain Cotton T-Shirt - 2 Pack
-            </p>
-            <div class="product-rating-container">
-                <img class="product-rating-stars" src="images/ratings/rating-45.png">
-                <p class="product-rating-num">56</p>
-            </div>
-            <div class="product-price">
-                <i class="fa-solid fa-indian-rupee-sign"></i>
-                <p>700</p>
-            </div>
-            <div class="product-quantity">
-                <select>
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
-                    <option>6</option>
-                    <option>7</option>
-                    <option>8</option>
-                    <option>9</option>
-                    <option>10</option>
-                </select>
-            </div>
-        </div>
-
-        <div class="product-container">
-            <div class="product-image-container">
-                <img  class="product-image" src="images/products/athletic-cotton-socks-6-pairs.jpg">
-            </div>
-            <p class="product-name limit-text-to-2-lines">
-                Black and Gray Athletic Cotton Socks - 6 Pairs
-            </p>
-            <div class="product-rating-container">
-                <img class="product-rating-stars" src="images/ratings/rating-45.png">
-                <p class="product-rating-num">87</p>
-            </div>
-            <div class="product-price">
-                <i class="fa-solid fa-indian-rupee-sign"></i>
-                <p>100</p>
-            </div>
-            <div class="product-quantity">
-                <select>
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
-                    <option>6</option>
-                    <option>7</option>
-                    <option>8</option>
-                    <option>9</option>
-                    <option>10</option>
-                </select>
-            </div>
-        </div>
-
-        <div class="product-container">
-            <div class="product-image-container">
-                <img  class="product-image" src="images/products/athletic-cotton-socks-6-pairs.jpg">
-            </div>
-            <p class="product-name limit-text-to-2-lines">
-                Black and Gray Athletic Cotton Socks - 6 Pairs
-            </p>
-            <div class="product-rating-container">
-                <img class="product-rating-stars" src="images/ratings/rating-45.png">
-                <p class="product-rating-num">87</p>
-            </div>
-            <div class="product-price">$10.90</div>
-            <div class="product-quantity">
-                <select>
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
-                    <option>6</option>
-                    <option>7</option>
-                    <option>8</option>
-                    <option>9</option>
-                    <option>10</option>
-                </select>
-            </div>
-        </div>
-
-        <div class="product-container">
-            <div class="product-image-container">
-                <img  class="product-image" src="images/products/athletic-cotton-socks-6-pairs.jpg">
-            </div>
-            <p class="product-name limit-text-to-2-lines">
-                Black and Gray Athletic Cotton Socks - 6 Pairs
-            </p>
-            <div class="product-rating-container">
-                <img class="product-rating-stars" src="images/ratings/rating-45.png">
-                <p class="product-rating-num">87</p>
-            </div>
-            <div class="product-price">$10.90</div>
-            <div class="product-quantity">
-                <select>
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
-                    <option>6</option>
-                    <option>7</option>
-                    <option>8</option>
-                    <option>9</option>
-                    <option>10</option>
-                </select>
-            </div>
-        </div>
-
-        <div class="product-container">
-            <div class="product-image-container">
-                <img  class="product-image" src="images/products/athletic-cotton-socks-6-pairs.jpg">
-            </div>
-            <p class="product-name limit-text-to-2-lines">
-                Black and Gray Athletic Cotton Socks - 6 Pairs
-            </p>
-            <div class="product-rating-container">
-                <img class="product-rating-stars" src="images/ratings/rating-45.png">
-                <p class="product-rating-num">87</p>
-            </div>
-            <div class="product-price">$10.90</div>
-            <div class="product-quantity">
-                <select>
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
-                    <option>6</option>
-                    <option>7</option>
-                    <option>8</option>
-                    <option>9</option>
-                    <option>10</option>
-                </select>
-            </div>
-        </div>
-
-        <div class="product-container">
-            <div class="product-image-container">
-                <img  class="product-image" src="images/products/athletic-cotton-socks-6-pairs.jpg">
-            </div>
-            <p class="product-name limit-text-to-2-lines">
-                Black and Gray Athletic Cotton Socks - 6 Pairs
-            </p>
-            <div class="product-rating-container">
-                <img class="product-rating-stars" src="images/ratings/rating-45.png">
-                <p class="product-rating-num">87</p>
-            </div>
-            <div class="product-price">$10.90</div>
-            <div class="product-quantity">
-                <select>
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
-                    <option>6</option>
-                    <option>7</option>
-                    <option>8</option>
-                    <option>9</option>
-                    <option>10</option>
-                </select>
-            </div>
-            <button class="Add-to-Cart-btn">Add to Cart</button>
-        </div> -->
+        <!-- Generating HTML using js -->
     </div>
 
 
 
-   
-   
-    
+
+
+
     <script type="module" src="scripts\amazon.js"></script>
-    
+
 
 
 </body>
