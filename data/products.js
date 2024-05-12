@@ -8,6 +8,8 @@ export class Product {
   rating;
   price;
   keywords;
+  variations;
+  variationsImage
 
   constructor(productDetails) {
     this.id = productDetails.id
@@ -15,7 +17,11 @@ export class Product {
     this.name = productDetails.name
     this.rating = productDetails.rating
     this.price = productDetails.price
-    this.keywords=productDetails.keywords
+    this.keywords = productDetails.keywords
+    this.variations = productDetails.variations
+    this.variationsImage = productDetails.variationsImage
+    // console.log(this.variations)
+    // console.log(this.variationsImage)
   }
 
   getStarsUrl() {
@@ -26,27 +32,56 @@ export class Product {
     return " "
   }
 
+  createImageUrl(selectedVariation) {
+    if (!this.variations || !this.variationsImage) {
+      return this.image
+    }
+
+    if (!selectedVariation) {
+      selectedVariation = {}
+
+      Object.keys(this.variations).forEach((name) => {
+        console.log(name)
+        selectedVariation[name] = this.variations[name][0]
+      })
+      // console.log(selectedVariation)
+    }
+
+    console.log(this.variationsImage)
+    const matchedKey = Object.keys(this.variationsImage).find((jsonString) => {
+      console.log(selectedVariation)
+      let objectKey = JSON.parse(jsonString)
+      console.log(objectKey)
+      return Object.keys(objectKey).every((name) => {
+        console.log(`${selectedVariation[name]} === ${objectKey[name]}`)
+        return selectedVariation[name] === objectKey[name]
+      })
+
+    })
+
+    if (matchedKey) {
+      console.log(matchedKey)
+      return this.variationsImage[matchedKey]
+    }
+
+  }
+
 }
 
 
 export class Clothing extends Product {
   sizeChartLink;
-  variations;
-  variationsImage
+
 
   constructor(productDetails) {
     super(productDetails)
     this.sizeChartLink = productDetails.sizeChartLink
-    this.variations=productDetails.variations
-    this.variationsImage=productDetails.variationsImage
-    console.log(this.variations)
-    console.log(this.variationsImage)
   }
 
   extraInfoHtml() {
     return `<a href="${this.sizeChartLink}" target="_blank">Size Chart</a>`
   }
- 
+
 
 
 }
@@ -100,7 +135,7 @@ export function loadProductsFetch() {
 
 
     console.log("loadproducts")
-    
+
   })/*.catch(()=>{
     console.log("unexpected error, please try again")
   })*/
@@ -131,9 +166,9 @@ export function loadProducts(fun) {
 
     })
 
-  xhr.addEventListener("error",()=>{
-    console.log("unexpected error, please try again")
-  })
+    xhr.addEventListener("error", () => {
+      console.log("unexpected error, please try again")
+    })
 
     console.log("load products")
 

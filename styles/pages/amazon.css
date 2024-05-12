@@ -37,6 +37,7 @@
 
 .spacer{
     flex-grow: 1;
+    margin-bottom: 20px;
 }
 
 
@@ -212,12 +213,35 @@
     border: none;
     width: 100%;
     cursor: pointer;
+
 }
 
 .Add-to-Cart-btn:hover{
 
     background-color:  hsl(50, 90%, 47%);
 }
-    
 
+
+.option-header{
+    font-weight: 600;
+}
+    
+.option-container{
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+
+.variation-option-btn{
+   padding: 5px 8px;
+   background-color: white;
+   border: 1px solid rgb(173, 177, 184);
+   border-radius: 8px;
+   margin-right: 3px;
+   cursor: pointer;
+   font-size: 15px;
+}
+
+.variation-option-btn-selected{
+    border:2px solid rgb(231, 117, 2);
+}
 

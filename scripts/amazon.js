@@ -1,4 +1,4 @@
-import { products, loadProducts,loadProductsFetch } from '../data/products.js'
+import { products, loadProducts,loadProductsFetch,getProduct } from '../data/products.js'
 import { cart } from '../data/cart-class.js'
 import { renderHeaderHtml } from './shared/amazon-header.js'
 
@@ -42,9 +42,10 @@ function renderProducts() {
 
 
     filteredProduct.forEach((product) => {
-        product_html += ` <div class="product-container">
+        let productImage=product.createImageUrl();
+        product_html += ` <div class="product-container js-product-container" data-product-id=${product.id}>
    <div class="product-image-container">
-       <img  class="product-image" src="${product.image}">
+       <img  class="product-image" src="${productImage}">
    </div>
    <p class="product-name limit-text-to-2-lines">
        ${product.name}
@@ -71,7 +72,7 @@ function renderProducts() {
            <option value="10">10</option>
        </select>
    </div>
-   ${product.extraInfoHtml()}
+   ${createVariationSelectorHtml(product)}
    <div class="spacer"></div>
    <div class="added-to-cart js-added-to-cart-${product.id}">
      <img src="images/icons/checkmark.png">
@@ -85,8 +86,107 @@ function renderProducts() {
 
     })
 
+    function createVariationSelectorHtml(product){
+        if(!product.variations){
+            return ""
+        }
+
+        let variationHtml=""
+
+        Object.keys(product.variations).forEach((name)=>{
+            console.log(name)
+
+           variationHtml+= `
+              <div class="option-header">${name}</div>
+              <div class="option-container">
+                ${creatVariationOptionHtml(name,product.variations[name])}
+              </div>`
+        })
+
+        return variationHtml
+
+    
+    }
+
+    function creatVariationOptionHtml(variationName,variationOption){
+        let optionHtml=""
+        variationOption.forEach((option,index)=>{
+             optionHtml+=`
+             <button class="${index===0 ? "variation-option-btn-selected": " "}  variation-option-btn" 
+              data-variation-name="${variationName}"
+              data-variation-value="${option}"
+              data-testid="variation-${variationName}-${option}">
+                ${option} 
+             </button>`
+        })
+        return optionHtml
+    }
+
 
     document.querySelector(".products-container").innerHTML = product_html;
+   
+
+    document.querySelectorAll(".variation-option-btn").forEach((element)=>{
+          element.addEventListener("click",(event)=>{
+             let button=event.target
+             const variationContainer=button.closest(".option-container")
+            
+             const previousButton=variationContainer.querySelector(".variation-option-btn-selected")
+             
+             previousButton.classList.remove("variation-option-btn-selected")
+             
+             button.classList.add("variation-option-btn-selected")
+
+             const productContainer=button.closest(".js-product-container")
+             console.log(productContainer)
+
+             const productId=productContainer.dataset.productId
+             console.log(productId)
+
+             const product=getProduct(productId)
+             console.log(product)
+
+            const variation=getSelectedVariation(productContainer)
+
+             const productImage=product.createImageUrl(variation)
+
+             productContainer.querySelector(".product-image").src=productImage
+
+
+            
+
+
+
+
+
+          })
+    })
+
+    function getSelectedVariation(productContainer){
+
+        if(!productContainer.querySelector(".variation-option-btn-selected")){
+           return ;
+        }
+        
+
+        let selectedVariation={}
+
+        productContainer.querySelectorAll(".variation-option-btn-selected").forEach((button)=>{
+           const name=button.dataset.variationName
+           const value=button.dataset.variationValue
+           console.log(name)
+           console.log(value)
+
+           selectedVariation[name]=value
+           console.log(selectedVariation)
+        })
+
+        return selectedVariation
+        
+
+
+    }
+
 
     let js_cart_btn = document.querySelectorAll(".js-add-to-cart-btn")
 
@@ -100,7 +200,26 @@ function renderProducts() {
         button.addEventListener("click", () => {
             console.log(button.dataset.productId)
             let productid = button.dataset.productId
-            cart.addToCart(productid);
+            let productContainer=button.closest(".js-product-container")
+            let variationDetails={}
+            // let variationValue=[]
+            // productContainer.querySelectorAll(".option-header").forEach((button)=>{
+            //      button.innerHTML
+
+            // })
+
+
+            productContainer.querySelectorAll(".variation-option-btn-selected").forEach((button)=>{
+                variationDetails[button.dataset.variationName]=button.dataset.variationValue
+                
+
+            })
+
+            console.log(variationDetails)
+
+           
+
+            cart.addToCart(productid,variationDetails);
             let cartQuantity = cart.updateCartQuantity();
             document.querySelector(".order-num").innerHTML = cartQuantity    
 
