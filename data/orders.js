@@ -7,6 +7,7 @@ export function addOrders(order) {
     saveToStorage()
 }
 
+console.log(orders)
 
 function saveToStorage() {
     localStorage.setItem("orders", JSON.stringify(orders))
@@ -30,5 +31,14 @@ export function getOrders(orderId){
 
 }
 
+export function getProductFromOrders(order,cartId){
+    let matchingProductFromCart
+  order.products.forEach((productDetails)=>{
+    if(cartId==productDetails.id){
+        matchingProductFromCart=productDetails
+    }
 
+  })
+  return matchingProductFromCart
+}
 

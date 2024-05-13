@@ -305,12 +305,21 @@ body{
 }
 
 .quantity-input{
-  width:30px;
+  width:50px;
   display: none;
+  margin-right: 5px;
+}
+
+.quantity-input:focus{
+  outline-color: hsl(33,96%,48%);
 }
 
 .save-quantity-input{
   display: none;
+}
+
+.save-quantity-input:hover{
+  color: hsl(33,96%,48%);
 }
 
 
@@ -332,3 +341,21 @@ body{
   cursor: pointer;
   
 }
+
+.variation-info{
+  margin-bottom: 5px;
+}
+
+.update-btn:hover{
+  color: hsl(33,96%,48%);
+  
+}
+
+.delete-btn:hover{
+   color: hsl(33,96%,48%);
+}
+
+
+
+
+

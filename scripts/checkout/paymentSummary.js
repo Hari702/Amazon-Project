@@ -107,6 +107,7 @@ export function renderPaymentSummary() {
   document.querySelector(".payment-summary-container").innerHTML = renderPaymentSummaryHtml
 
 
+  
 
   // console.log("payment summary")
 

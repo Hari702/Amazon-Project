@@ -201,7 +201,7 @@ function renderProducts() {
             console.log(button.dataset.productId)
             let productid = button.dataset.productId
             let productContainer=button.closest(".js-product-container")
-            let variationDetails={}
+            let selectedVariationDetails={}
             // let variationValue=[]
             // productContainer.querySelectorAll(".option-header").forEach((button)=>{
             //      button.innerHTML
@@ -210,16 +210,16 @@ function renderProducts() {
 
 
             productContainer.querySelectorAll(".variation-option-btn-selected").forEach((button)=>{
-                variationDetails[button.dataset.variationName]=button.dataset.variationValue
+                selectedVariationDetails[button.dataset.variationName]=button.dataset.variationValue
                 
 
             })
 
-            console.log(variationDetails)
+            console.log(selectedVariationDetails)
 
            
-
-            cart.addToCart(productid,variationDetails);
+            let quantity = parseInt(document.querySelector(`.js-quantity-selector-${productid}`).value)
+            cart.addToCart(productid,quantity,selectedVariationDetails);
             let cartQuantity = cart.updateCartQuantity();
             document.querySelector(".order-num").innerHTML = cartQuantity    
 

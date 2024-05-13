@@ -1,4 +1,5 @@
 import { getDeliveryOption } from "./deliveryOptions.js";
+import '../scripts/packages/uuid.js'
 
 class Cart{
      cartItems;
@@ -29,17 +30,15 @@ class Cart{
         addCartToLocalStorage() {
             localStorage.setItem(this.#localStorageKey, JSON.stringify(this.cartItems))
         }
-        addToCart(productid) {
+        addToCart(productid,quantity,selectedVariationDetails) {
             //   adding product to the cart
 
-            let quantity = parseInt(document.querySelector(`.js-quantity-selector-${productid}`).value)
+            // let quantity = parseInt(document.querySelector(`.js-quantity-selector-${productid}`).value)
             console.log(quantity)
             let matchingitem;
-            this.cartItems.forEach((cartItem) => {
-                // console.log(`${productname}===${item.productname}`)
-                if (productid === cartItem.productid) {
-                    matchingitem = cartItem
-                }
+
+            matchingitem=this.cartItems.find((cartItem)=>{
+                return productid===cartItem.productid && this.isSameVariation(cartItem.variationDetails,selectedVariationDetails)
             })
 
             if (matchingitem) {
@@ -48,24 +47,28 @@ class Cart{
 
             else {
                 this.cartItems.push({
+                    id:uuid(),
                     // productid:productid
                     productid,
                     // quantity:quantity
                     quantity,
+                    variationDetails:selectedVariationDetails,
+
                     deliveryOptionId: "1"
                 })
 
             }
             this.addCartToLocalStorage()
+            console.log(this.cartItems)
 
         }
 
-        removeProductFromCart(productId) {
+        removeProductFromCart(cartId) {
             const newCart = []
             console.log(newCart)
             this.cartItems.forEach((cartItem) => {
 
-                if (cartItem.productid !== productId) {
+                if (cartItem.id !== cartId) {
 
                     newCart.push(cartItem)
 
@@ -93,11 +96,11 @@ class Cart{
             return num_quantity
         }
 
-        updateQuantity(productId, newQuantity) {
+        updateQuantity(cartId, newQuantity) {
             let matchingItem;
 
             this.cartItems.forEach((cartItem) => {
-                if (productId === cartItem.productid) {
+                if (cartId === cartItem.id) {
                     matchingItem = cartItem;
                 }
             });
@@ -107,13 +110,13 @@ class Cart{
             this.addCartToLocalStorage()
         }
 
-        updateDeliveryOption(productId, deliveryOptionId) {
+        updateDeliveryOption(cartId, deliveryOptionId) {
 
             let matchingProduct
 
             let deliveryOption = getDeliveryOption(deliveryOptionId)
             this.cartItems.forEach((cartItem) => {
-                if (productId === cartItem.productid) {
+                if (cartId === cartItem.id) {
                     matchingProduct = cartItem
                 }
 
@@ -132,6 +135,19 @@ class Cart{
 
             this.addCartToLocalStorage()
         }
+
+        
+        isSameVariation(cartVariation,selectedVariation){
+            if(!selectedVariation){
+                selectedVariation={}
+            }
+            if(!cartVariation){
+                cartVariation={}
+            }
+
+           return JSON.stringify(cartVariation,Object.keys(cartVariation).sort()) === JSON.stringify(selectedVariation,Object.keys(selectedVariation).sort())
+        }
+        
 
 }
 

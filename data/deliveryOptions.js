@@ -45,12 +45,11 @@ export function calculateDeliveryDate(deliveryOption){
     //  const deliveryDate=today.add(deliveryOption.deliveryDays,'day')
 
     let remainingDays = deliveryOption.deliveryDays;
-    console.log(remainingDays)
     let deliveryDate = dayjs();
   
     while (remainingDays > 0) {
       deliveryDate = deliveryDate.add(1, 'day');
-      console.log(deliveryDate)
+      
   
       if (!isWeekend(deliveryDate)) {
         remainingDays--;

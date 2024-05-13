@@ -1,8 +1,9 @@
-import { getOrders } from "../data/orders.js"
+import { getOrders,getProductFromOrders } from "../data/orders.js"
 import { getProduct } from "../data/products.js"
 import { loadProductsFetch } from "../data/products.js"
 import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js'
 import { renderHeaderHtml } from "./shared/amazon-header.js"
+import { renderVariationHtml } from "./utils/variation.js"
 
 renderHeaderHtml()
 
@@ -11,21 +12,26 @@ async function loadPage() {
    const url = new URL(window.location.href)
    let order = getOrders(url.searchParams.get("orderId"))
    let product = getProduct(url.searchParams.get("productId"))
-   let getProductFromOrders
-   order.products.forEach((productInner) => {
-      if (productInner.productid === product.id) {
-         getProductFromOrders = productInner
-      }
-   })
+   let productFromOrders=getProductFromOrders(order,url.searchParams.get("cartId"))
+   console.log(productFromOrders)
+
+   // let ProductFromOrders
+   // order.products.forEach((productInner) => {
+   //    if (productInner.productid === product.id) {
+   //       ProductFromOrders = productInner
+   //    }
+   // })
 
    console.log(getProductFromOrders)
 
    console.log(order)
    console.log(product)
 
+   let productImage=product.createImageUrl(productFromOrders.variations)
+
    dayjs.extend(dayjsPluginUTC.default)
-   console.log(getProductFromOrders.estimatedDeliveryTime)
-   let arrivingDate = dayjs(getProductFromOrders.estimatedDeliveryTime).format
+   console.log(productFromOrders.estimatedDeliveryTime)
+   let arrivingDate = dayjs(productFromOrders.estimatedDeliveryTime).format
       ("dddd, MMMM D")
    console.log(arrivingDate)
 
@@ -33,7 +39,7 @@ async function loadPage() {
    console.log(`today ${today.format('ddd, DD MMM YYYY HH:mm:ss [GMT]')}`);
    const orderTime = dayjs(order.orderTime).utcOffset('+05:30');
    console.log(`orderTime ${orderTime.format('ddd, DD MMM YYYY HH:mm:ss [GMT]')}`);
-   const deliveryTime = dayjs(getProductFromOrders.estimatedDeliveryTime).utcOffset('+05:30');
+   const deliveryTime = dayjs(productFromOrders.estimatedDeliveryTime).utcOffset('+05:30');
    console.log(`deliverytime ${deliveryTime.format('ddd, DD MMM YYYY HH:mm:ss [GMT]')}`)
 
 
@@ -47,10 +53,11 @@ async function loadPage() {
    const deliveryMessage=today<deliveryTime ? "Arriving on" : "Delivered on"
 
    const trackingHtml = `<a class="tracking-orders-link" href="orders.html">view all orders</a>
-    <div class="tracking-arriving-date js-tracking-${percentProgress>100 ? "delivered" : " "}">${deliveryMessage} ${arrivingDate}</div>
+    <div class="tracking-arriving-date ">${deliveryMessage} ${arrivingDate}</div>
     <div class="tracking-product-name">${product.name}</div>
-    <div class="tracking-product-quantity">Quantity: ${getProductFromOrders.quantity}</div>
-    <img class="tracking-product-image" src="${product.image}"></img>
+    ${renderVariationHtml(productFromOrders.variations)}
+    <div class="tracking-product-quantity">Quantity: ${productFromOrders.quantity}</div>
+    <img class="tracking-product-image" src="${productImage}"></img>
     <div class="tracking-details-container">
       <div class="progress-label-${percentProgress < 50 ? "current-status" : " "}">Preparing</div>
       <div class="progress-label-${percentProgress > 50 && percentProgress <= 99 ? "current-status" : " "}">Shipped</div>
