@@ -188,13 +188,13 @@ function renderProducts() {
     }
 
 
-    let js_cart_btn = document.querySelectorAll(".js-add-to-cart-btn")
+    let js_add_cart_btn = document.querySelectorAll(".js-add-to-cart-btn")
 
     let cartQuantity = cart.updateCartQuantity();
     document.querySelector(".order-num").innerHTML = cartQuantity
 
 
-    js_cart_btn.forEach((button) => {
+    js_add_cart_btn.forEach((button) => {
 
         let addedMessageTimeout;
         button.addEventListener("click", () => {

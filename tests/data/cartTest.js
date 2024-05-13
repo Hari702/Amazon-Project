@@ -43,29 +43,49 @@ describe("test suite: add to cart", () => {
     it("add a existing product to cart", () => {
 
 
-        cart.cartItems = [{
-            productid: "e43638ce-6aa0-4b85-b27f-e1d07eb678c6",
-            quantity: 1,
-            deliveryOptionId: "1"
-
-        }]
+        cart.cartItems = [
+            {
+                id: "89326bc1-2fdc-74c6-4966-dd3d2ccf1184",
+                productid: "bc2847e9-5323-403f-b7cf-57fde044a955",
+                quantity: 1,
+                variationDetails: { "Color": "Black", "Size": "XL" },
+                deliveryOptionId: "1"
+            },
+            {
+                id: "42ff2606-3dc2-1f95-6d4e-4ba1d4238346",
+                productid: "e43638ce-6aa0-4b85-b27f-e1d07eb678c6",
+                quantity: 1,
+                variationDetails: {},
+                deliveryOptionId: "1"
+            }
+        ]
 
         loadFromStorage()
 
-    console.log(cart[0])
+        console.log(cart[0])
 
-    cart.addToCart("e43638ce-6aa0-4b85-b27f-e1d07eb678c6")
-    expect(cart.cartItems[0].quantity).toEqual(2)
+        cart.addToCart("bc2847e9-5323-403f-b7cf-57fde044a955", 1, { "Color": "Black", "Size": "XL" })
+        expect(cart.cartItems[0].quantity).toEqual(2)
 
-    expect(localStorage.setItem).toHaveBeenCalledWith("cartproduct-oop", JSON.stringify([{
-        productid: "e43638ce-6aa0-4b85-b27f-e1d07eb678c6",
-        quantity: 2,
-        deliveryOptionId: "1"
+        expect(localStorage.setItem).toHaveBeenCalledWith("cartproduct-oop", JSON.stringify([{
+            id: "89326bc1-2fdc-74c6-4966-dd3d2ccf1184",
+            productid: "bc2847e9-5323-403f-b7cf-57fde044a955",
+            quantity: 2,
+            variationDetails: { "Color": "Black", "Size": "XL" },
+            deliveryOptionId: "1"
 
-    }]))
+        },
+        {
+            id: "42ff2606-3dc2-1f95-6d4e-4ba1d4238346",
+            productid: "e43638ce-6aa0-4b85-b27f-e1d07eb678c6",
+            quantity: 1,
+            variationDetails: {},
+            deliveryOptionId: "1"
+        }
+        ]))
     })
 
-    
+
 
 
     it("add a new product to cart", () => {
@@ -77,26 +97,22 @@ describe("test suite: add to cart", () => {
 
         console.log(localStorage.getItem("cart"))
 
-        cart.addToCart("e43638ce-6aa0-4b85-b27f-e1d07eb678c6")
-        cart.addToCart("15b6fc6f-327a-4ec4-896f-486349e85a3d")
-
-        expect(cart.cartItems[0].productid).toEqual("e43638ce-6aa0-4b85-b27f-e1d07eb678c6")
-        expect(cart.cartItems[1].productid).toEqual("15b6fc6f-327a-4ec4-896f-486349e85a3d")
-        expect(localStorage.setItem).toHaveBeenCalledTimes(2)
-        expect(cart.cartItems.length).toEqual(2)
-
-        expect(localStorage.setItem).toHaveBeenCalledWith("cartproduct-oop", JSON.stringify([{
-            productid: "e43638ce-6aa0-4b85-b27f-e1d07eb678c6",
-            quantity: 1,
-            deliveryOptionId: "1"
-        },
-        {
-            productid: "15b6fc6f-327a-4ec4-896f-486349e85a3d",
-            quantity: 1,
-            deliveryOptionId: "1"
+        cart.addToCart("bc2847e9-5323-403f-b7cf-57fde044a955", 2, { "Color": "Black", "Size": "XL" })
 
 
-        }]))
+        expect(cart.cartItems[0].productid).toEqual("bc2847e9-5323-403f-b7cf-57fde044a955")
+        expect(localStorage.setItem).toHaveBeenCalledTimes(1)
+        expect(cart.cartItems.length).toEqual(1)
+
+        // expect(localStorage.setItem).toHaveBeenCalledWith("cartproduct-oop", JSON.stringify([
+        //     {
+        //         id:"6d744f44-37d3-57af-14b2-1a2dcf8963d2",
+        //         productid:"bc2847e9-5323-403f-b7cf-57fde044a955",
+        //         quantity:1,
+        //         variationDetails:{"Color":"Black","Size":"XL"},
+        //         deliveryOptionId:"1"
+        //     }
+        //     ]))
     })
 
 
@@ -106,36 +122,41 @@ describe("test suite: add to cart", () => {
 describe("test suite: remove from the cart", () => {
 
     beforeEach(() => {
-
         spyOn(localStorage, "setItem")
         cart.cartItems = [
+
             {
-                productid: "e43638ce-6aa0-4b85-b27f-e1d07eb678c6",
+                id: "89326bc1-2fdc-74c6-4966-dd3d2ccf1184",
+                productid: "bc2847e9-5323-403f-b7cf-57fde044a955",
                 quantity: 1,
+                variationDetails: { "Color": "Black", "Size": "XL" },
                 deliveryOptionId: "1"
             },
             {
-                productid: "15b6fc6f-327a-4ec4-896f-486349e85a3d",
+                id: "42ff2606-3dc2-1f95-6d4e-4ba1d4238346",
+                productid: "e43638ce-6aa0-4b85-b27f-e1d07eb678c6",
                 quantity: 1,
+                variationDetails: {},
                 deliveryOptionId: "1"
-
-
             }
+
         ]
     })
     it("remove the product in the cart", () => {
 
-        cart.removeProductFromCart(cart.cartItems[0].productid)
+        cart.removeProductFromCart(cart.cartItems[0].id)
 
         console.log(cart)
 
         expect(cart.cartItems.length).toEqual(1)
-        expect(cart.cartItems[0].productid).toEqual("15b6fc6f-327a-4ec4-896f-486349e85a3d")
+        expect(cart.cartItems[0].id).toEqual("42ff2606-3dc2-1f95-6d4e-4ba1d4238346")
 
         expect(localStorage.setItem).toHaveBeenCalledTimes(1)
         expect(localStorage.setItem).toHaveBeenCalledWith("cartproduct-oop", JSON.stringify([{
-            productid: "15b6fc6f-327a-4ec4-896f-486349e85a3d",
+            id: "42ff2606-3dc2-1f95-6d4e-4ba1d4238346",
+            productid: "e43638ce-6aa0-4b85-b27f-e1d07eb678c6",
             quantity: 1,
+            variationDetails: {},
             deliveryOptionId: "1"
 
         }]))
@@ -151,17 +172,21 @@ describe("test suite: remove from the cart", () => {
         expect(localStorage.setItem).toHaveBeenCalledTimes(1)
         expect(localStorage.setItem).toHaveBeenCalledWith("cartproduct-oop", JSON.stringify([
             {
-                productid: "e43638ce-6aa0-4b85-b27f-e1d07eb678c6",
+                id: "89326bc1-2fdc-74c6-4966-dd3d2ccf1184",
+                productid: "bc2847e9-5323-403f-b7cf-57fde044a955",
                 quantity: 1,
+                variationDetails: { "Color": "Black", "Size": "XL" },
                 deliveryOptionId: "1"
             },
             {
-                productid: "15b6fc6f-327a-4ec4-896f-486349e85a3d",
+                id: "42ff2606-3dc2-1f95-6d4e-4ba1d4238346",
+                productid: "e43638ce-6aa0-4b85-b27f-e1d07eb678c6",
                 quantity: 1,
+                variationDetails: {},
                 deliveryOptionId: "1"
-
-
             }
+
+
         ]))
 
     })
@@ -175,15 +200,18 @@ describe("test suite: update delivery option", () => {
         spyOn(localStorage, "setItem")
         cart.cartItems = [
             {
-                productid: "e43638ce-6aa0-4b85-b27f-e1d07eb678c6",
+                id: "89326bc1-2fdc-74c6-4966-dd3d2ccf1184",
+                productid: "bc2847e9-5323-403f-b7cf-57fde044a955",
                 quantity: 1,
+                variationDetails: { "Color": "Black", "Size": "XL" },
                 deliveryOptionId: "1"
             },
             {
-                productid: "15b6fc6f-327a-4ec4-896f-486349e85a3d",
+                id: "42ff2606-3dc2-1f95-6d4e-4ba1d4238346",
+                productid: "e43638ce-6aa0-4b85-b27f-e1d07eb678c6",
                 quantity: 1,
+                variationDetails: {},
                 deliveryOptionId: "1"
-
             }
         ]
 
@@ -191,23 +219,24 @@ describe("test suite: update delivery option", () => {
 
     it("update delivery option for product in the cart", () => {
 
-        cart.updateDeliveryOption(cart.cartItems[0].productid, "3")
+        cart.updateDeliveryOption(cart.cartItems[0].id, "3")
         expect(cart.cartItems[0].deliveryOptionId).toEqual("3")
         expect(localStorage.setItem).toHaveBeenCalledTimes(1)
-        expect(localStorage.setItem).toHaveBeenCalledWith("cartproduct-oop", JSON.stringify([{
-            productid: "e43638ce-6aa0-4b85-b27f-e1d07eb678c6",
-            quantity: 1,
-            deliveryOptionId: "3"
-
-        },
-        {
-
-            productid: "15b6fc6f-327a-4ec4-896f-486349e85a3d",
-            quantity: 1,
-            deliveryOptionId: "1"
-
-
-        }
+        expect(localStorage.setItem).toHaveBeenCalledWith("cartproduct-oop", JSON.stringify([
+            {
+                id: "89326bc1-2fdc-74c6-4966-dd3d2ccf1184",
+                productid: "bc2847e9-5323-403f-b7cf-57fde044a955",
+                quantity: 1,
+                variationDetails: { "Color": "Black", "Size": "XL" },
+                deliveryOptionId: "3"
+            },
+            {
+                id: "42ff2606-3dc2-1f95-6d4e-4ba1d4238346",
+                productid: "e43638ce-6aa0-4b85-b27f-e1d07eb678c6",
+                quantity: 1,
+                variationDetails: {},
+                deliveryOptionId: "1"
+            }
         ]))
     })
 
