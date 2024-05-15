@@ -245,3 +245,7 @@
     border:2px solid rgb(231, 117, 2);
 }
 
+.empty-results-message{
+    margin-top: 10px;
+    margin-left: 10px;
+}

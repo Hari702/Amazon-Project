@@ -9,7 +9,7 @@ import { renderVariationHtml } from "./utils/variation.js";
 
 
 renderHeaderHtml()
-async function loadPage() {
+export async function loadPage() {
 
     await loadProductsFetch()
 
@@ -55,7 +55,7 @@ async function loadPage() {
 
                     <div class="right-section">
                         <div class="order-header-label">Order Id:</div>
-                        <div>${order.id}</div>
+                        <div class="js-test-order-id">${order.id}</div>
                     </div>
                 </div>
                 <div class="order-details">
@@ -88,14 +88,14 @@ async function loadPage() {
             <div class="product-arriving-date">Arriving on: ${arrivingDate}</div>
             ${renderVariationHtml(orderProduct.variations)}
             <div class="product-quantity">Quantity: ${orderProduct.quantity}</div>
-            <button class="product-buy-again js-product-buy-again" data-product-id="${orderProduct.productid}" data-cart-id="${orderProduct.id}" data-order-id="${order.id}">
+            <button class="product-buy-again js-product-buy-again js-product-buy-again-${orderProduct.id}" data-product-id="${orderProduct.productid}" data-cart-id="${orderProduct.id}" data-order-id="${order.id}">
                 <img src="images/icons/buy-again.png">
                 <span class="product-buy-again-text">Buy it again </span>
             </button>
         </div>
 
         <div class="track-package-container">
-          <a href="tracking.html?orderId=${order.id}&productId=${orderProduct.productid}&cartId=${orderProduct.id}">
+          <a class="js-track-package-btn" href="tracking.html?orderId=${order.id}&productId=${orderProduct.productid}&cartId=${orderProduct.id}">
             <button  class="track-package-button">Track Package</button>
           </a>  
         </div>`
@@ -109,7 +109,9 @@ async function loadPage() {
 
     }
 
-    document.querySelector(".order-grid").innerHTML = ordersHtml
+    let orderGrid= document.querySelector(".order-grid")
+    // document.querySelector(".order-grid").innerHTML = ordersHtml
+    orderGrid.innerHTML=ordersHtml
 
     document.querySelectorAll(".js-product-buy-again").forEach((element) => {
 

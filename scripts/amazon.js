@@ -1,4 +1,4 @@
-import { products, loadProducts,loadProductsFetch,getProduct } from '../data/products.js'
+import { products, loadProducts, loadProductsFetch, getProduct } from '../data/products.js'
 import { cart } from '../data/cart-class.js'
 import { renderHeaderHtml } from './shared/amazon-header.js'
 
@@ -6,7 +6,7 @@ import { renderHeaderHtml } from './shared/amazon-header.js'
 let product_html = ""
 
 // loadProducts(renderProducts)
-loadProductsFetch().then(()=>{
+loadProductsFetch().then(() => {
     renderProducts()
 })
 
@@ -17,32 +17,41 @@ renderHeaderHtml()
 
 function renderProducts() {
 
-    const url=new URL(window.location.href)
+    const url = new URL(window.location.href)
 
-    const search=url.searchParams.get("search")
+    const search = url.searchParams.get("search")
 
-    let filteredProduct=products
+    let filteredProduct = products
 
-    if(search){
-        filteredProduct=filteredProduct.filter((product)=>{
-            let matchingKeyword=false
-            product.keywords.forEach((keyword)=>{
-               if(keyword.toLowerCase().includes(search)){
-                  matchingKeyword=true
-               }
+    if (search) {
+        filteredProduct = filteredProduct.filter((product) => {
+            let matchingKeyword = false
+            product.keywords.forEach((keyword) => {
+                if (keyword.toLowerCase().includes(search)) {
+                    matchingKeyword = true
+                }
             })
-            document.querySelector(".js-header-input").value=search
-            document.querySelector(".js-mobile-header-input").value=search
+            document.querySelector(".js-header-input").value = search
+            document.querySelector(".js-mobile-header-input").value = search
             return product.name.toLowerCase().includes(search) || matchingKeyword
-            
+
         })
+    }
+
+    
+    if (filteredProduct.length === 0) {
+        document.querySelector(".products-container").innerHTML = `
+                         <div class="empty-results-message">
+                             No products matched your search.
+                         </div>`
+        return
     }
 
     console.log(filteredProduct)
 
 
     filteredProduct.forEach((product) => {
-        let productImage=product.createImageUrl();
+        let productImage = product.createImageUrl();
         product_html += ` <div class="product-container js-product-container" data-product-id=${product.id}>
    <div class="product-image-container">
        <img  class="product-image" src="${productImage}">
@@ -86,33 +95,33 @@ function renderProducts() {
 
     })
 
-    function createVariationSelectorHtml(product){
-        if(!product.variations){
+    function createVariationSelectorHtml(product) {
+        if (!product.variations) {
             return ""
         }
 
-        let variationHtml=""
+        let variationHtml = ""
 
-        Object.keys(product.variations).forEach((name)=>{
+        Object.keys(product.variations).forEach((name) => {
             console.log(name)
 
-           variationHtml+= `
+            variationHtml += `
               <div class="option-header">${name}</div>
               <div class="option-container">
-                ${creatVariationOptionHtml(name,product.variations[name])}
+                ${creatVariationOptionHtml(name, product.variations[name])}
               </div>`
         })
 
         return variationHtml
 
-    
+
     }
 
-    function creatVariationOptionHtml(variationName,variationOption){
-        let optionHtml=""
-        variationOption.forEach((option,index)=>{
-             optionHtml+=`
-             <button class="${index===0 ? "variation-option-btn-selected": " "}  variation-option-btn" 
+    function creatVariationOptionHtml(variationName, variationOption) {
+        let optionHtml = ""
+        variationOption.forEach((option, index) => {
+            optionHtml += `
+             <button class="${index === 0 ? "variation-option-btn-selected" : " "}  variation-option-btn" 
               data-variation-name="${variationName}"
               data-variation-value="${option}"
               data-testid="variation-${variationName}-${option}">
@@ -124,65 +133,65 @@ function renderProducts() {
 
 
     document.querySelector(".products-container").innerHTML = product_html;
-   
-
-    document.querySelectorAll(".variation-option-btn").forEach((element)=>{
-          element.addEventListener("click",(event)=>{
-             let button=event.target
-             const variationContainer=button.closest(".option-container")
-            
-             const previousButton=variationContainer.querySelector(".variation-option-btn-selected")
-             
-             previousButton.classList.remove("variation-option-btn-selected")
-             
-             button.classList.add("variation-option-btn-selected")
-
-             const productContainer=button.closest(".js-product-container")
-             console.log(productContainer)
-
-             const productId=productContainer.dataset.productId
-             console.log(productId)
-
-             const product=getProduct(productId)
-             console.log(product)
-
-            const variation=getSelectedVariation(productContainer)
-
-             const productImage=product.createImageUrl(variation)
-
-             productContainer.querySelector(".product-image").src=productImage
 
 
-            
+    document.querySelectorAll(".variation-option-btn").forEach((element) => {
+        element.addEventListener("click", (event) => {
+            let button = event.target
+            const variationContainer = button.closest(".option-container")
+
+            const previousButton = variationContainer.querySelector(".variation-option-btn-selected")
+
+            previousButton.classList.remove("variation-option-btn-selected")
+
+            button.classList.add("variation-option-btn-selected")
+
+            const productContainer = button.closest(".js-product-container")
+            console.log(productContainer)
+
+            const productId = productContainer.dataset.productId
+            console.log(productId)
+
+            const product = getProduct(productId)
+            console.log(product)
+
+            const variation = getSelectedVariation(productContainer)
+
+            const productImage = product.createImageUrl(variation)
+
+            productContainer.querySelector(".product-image").src = productImage
 
 
 
 
 
-          })
+
+
+
+        })
     })
 
-    function getSelectedVariation(productContainer){
+    function getSelectedVariation(productContainer) {
 
-        if(!productContainer.querySelector(".variation-option-btn-selected")){
-           return ;
+        if (!productContainer.querySelector(".variation-option-btn-selected")) {
+            return;
         }
-        
 
-        let selectedVariation={}
 
-        productContainer.querySelectorAll(".variation-option-btn-selected").forEach((button)=>{
-           const name=button.dataset.variationName
-           const value=button.dataset.variationValue
-           console.log(name)
-           console.log(value)
+        let selectedVariation = {}
 
-           selectedVariation[name]=value
-           console.log(selectedVariation)
+        productContainer.querySelectorAll(".variation-option-btn-selected").forEach((button) => {
+            const name = button.dataset.variationName
+            const value = button.dataset.variationValue
+            console.log(name)
+            console.log(value)
+
+            selectedVariation[name] = value
+            console.log(selectedVariation)
         })
 
         return selectedVariation
-        
+
 
 
     }
@@ -200,8 +209,8 @@ function renderProducts() {
         button.addEventListener("click", () => {
             console.log(button.dataset.productId)
             let productid = button.dataset.productId
-            let productContainer=button.closest(".js-product-container")
-            let selectedVariationDetails={}
+            let productContainer = button.closest(".js-product-container")
+            let selectedVariationDetails = {}
             // let variationValue=[]
             // productContainer.querySelectorAll(".option-header").forEach((button)=>{
             //      button.innerHTML
@@ -209,19 +218,19 @@ function renderProducts() {
             // })
 
 
-            productContainer.querySelectorAll(".variation-option-btn-selected").forEach((button)=>{
-                selectedVariationDetails[button.dataset.variationName]=button.dataset.variationValue
-                
+            productContainer.querySelectorAll(".variation-option-btn-selected").forEach((button) => {
+                selectedVariationDetails[button.dataset.variationName] = button.dataset.variationValue
+
 
             })
 
             console.log(selectedVariationDetails)
 
-           
+
             let quantity = parseInt(document.querySelector(`.js-quantity-selector-${productid}`).value)
-            cart.addToCart(productid,quantity,selectedVariationDetails);
+            cart.addToCart(productid, quantity, selectedVariationDetails);
             let cartQuantity = cart.updateCartQuantity();
-            document.querySelector(".order-num").innerHTML = cartQuantity    
+            document.querySelector(".order-num").innerHTML = cartQuantity
 
 
             // when we click add cart button added with color green will display and when click add cart button within 3 sec continuously added popup will display 3 sec and display,will not  continue to previous timeout it will start with new timeout
@@ -251,7 +260,7 @@ function renderProducts() {
 
     })
 
-   
+
 }
 
 
