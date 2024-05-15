@@ -1,5 +1,11 @@
 
-export const orders = JSON.parse(localStorage.getItem("orders")) || []
+export let orders
+loadFromStorage()
+
+
+export function loadFromStorage() {
+    orders = JSON.parse(localStorage.getItem("orders")) || []
+}
 
 
 export function addOrders(order) {
@@ -18,27 +24,30 @@ function saveToStorage() {
 console.log(orders)
 
 
-export function getOrders(orderId){
+export function getOrders(orderId) {
     let matchingOrder
+    orders.forEach((order) => {
+        console.log(`${order.id} === ${orderId}`)
+        if (order.id === orderId) {
 
-    orders.forEach((order)=>{
-        if(order.id===orderId){
-             matchingOrder=order
+            matchingOrder = order
         }
     })
+
+
 
     return matchingOrder
 
 }
 
-export function getProductFromOrders(order,cartId){
+export function getProductFromOrders(order, cartId) {
     let matchingProductFromCart
-  order.products.forEach((productDetails)=>{
-    if(cartId==productDetails.id){
-        matchingProductFromCart=productDetails
-    }
+    order.products.forEach((productDetails) => {
+        if (cartId == productDetails.id) {
+            matchingProductFromCart = productDetails
+        }
 
-  })
-  return matchingProductFromCart
+    })
+    return matchingProductFromCart
 }
 
