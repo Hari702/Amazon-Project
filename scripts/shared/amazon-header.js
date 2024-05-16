@@ -5,7 +5,7 @@ export function renderHeaderHtml() {
 
     let headerHtml = `<div class="amazon-header-left-section">
 
-    <a class="amazon-logo-link header-link" href="amazon.html">
+    <a class="amazon-logo-link header-link" href="index.html">
         <img class="amazon-logo" src="images/amazon-logo-white.png">
         <img class="amazon-mobile-logo" src="images/amazon-mobile-logo-white.png">
     </a>
