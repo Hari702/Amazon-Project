@@ -72,7 +72,7 @@ export function renderOrderSummary() {
     console.log("oooo")
     document.querySelector(".js-view-product-btn").addEventListener("click",()=>{
       console.log("view product")
-      window.location.href="amazon.html"
+      window.location.href="index.html"
       
     })
   }
