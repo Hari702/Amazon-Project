@@ -110,10 +110,10 @@ export class Appliance extends Product {
 export let products = []
 
 
-
+// http://127.0.0.1:5000/products
 export function loadProductsFetch() {
 
-  const promise = fetch("http://127.0.0.1:5000/products").then((response) => {
+  const promise = fetch("https://amazonbackend-80aa.onrender.com/products").then((response) => {
     return response.json()
   }).then((productsDetails) => {
 
