@@ -47,14 +47,14 @@ export function renderHeaderHtml() {
     if (document.querySelector(".js-header-input")) {
         document.querySelector(".js-search-button").addEventListener("click", () => {
             const searchInput = document.querySelector(".js-header-input").value
-            window.location.href = `amazon.html?search=${searchInput}`
+            window.location.href = `index.html?search=${searchInput}`
         })
 
         document.querySelector(".js-header-input").addEventListener("keydown", (event) => {
 
             if (event.key === "Enter") {
                 const searchInput = document.querySelector(".js-header-input").value
-                window.location.href = `amazon.html?search=${searchInput}`
+                window.location.href = `index.html?search=${searchInput}`
             }
 
         })
@@ -63,14 +63,14 @@ export function renderHeaderHtml() {
     if(document.querySelector(".js-mobile-search-button")) {
         document.querySelector(".js-mobile-search-button").addEventListener("click", () => {
             const searchInput = document.querySelector(".js-mobile-header-input").value
-            window.location.href = `amazon.html?search=${searchInput}`
+            window.location.href = `index.html?search=${searchInput}`
         })
 
         document.querySelector(".js-mobile-header-input").addEventListener("keydown", (event) => {
 
             if (event.key === "Enter") {
                 const searchInput = document.querySelector(".js-mobile-header-input").value
-                window.location.href = `amazon.html?search=${searchInput}`
+                window.location.href = `index.html?search=${searchInput}`
             }
 
         })
