@@ -27,7 +27,7 @@ function renderProducts() {
         filteredProduct = filteredProduct.filter((product) => {
             let matchingKeyword = false
             product.keywords.forEach((keyword) => {
-                if (keyword.toLowerCase().includes(search)) {
+                if (keyword.toLowerCase().includes(search.toLowerCase()) {
                     matchingKeyword = true
                 }
             })
