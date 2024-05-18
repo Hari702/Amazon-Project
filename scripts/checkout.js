@@ -13,13 +13,14 @@ async function loadPage(){
     console.log("Async")
     await loadProductsFetch();
     await loadCartFetch();
+    renderOrderSummary();
+    renderPaymentSummary();
    }
    catch(error){
       console.log("unexpected error, please try again")
    }
     
-    renderOrderSummary();
-    renderPaymentSummary();
+    
     
 }
 
