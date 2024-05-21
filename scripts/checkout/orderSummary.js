@@ -13,12 +13,12 @@ export function renderOrderSummary() {
   if (cart.cartItems.length !== 0) {
     cart.cartItems.forEach((cartItem) => {
       const productId = cartItem.productid
-      
 
 
-      
+
+
       let matchingProduct = getProduct(productId)
-      let productImage=matchingProduct.createImageUrl(cartItem.variationDetails)
+      let productImage = matchingProduct.createImageUrl(cartItem.variationDetails)
 
 
       const deliveryOptionId = cartItem.deliveryOptionId
@@ -26,7 +26,7 @@ export function renderOrderSummary() {
       let deliveryOption = getDeliveryOption(deliveryOptionId)
 
       let dataString = calculateDeliveryDate(deliveryOption)
-    
+
 
       cartProductHtml += `
   <div class="ordered-product-container js-cart-item  ordered-product-container-${cartItem.id}" data-cart-id="${cartItem.id}">
@@ -70,15 +70,15 @@ export function renderOrderSummary() {
           <button class="view-product-btn js-view-product-btn">View products</button>
         </div>`
     console.log("oooo")
-    document.querySelector(".js-view-product-btn").addEventListener("click",()=>{
+    document.querySelector(".js-view-product-btn").addEventListener("click", () => {
       console.log("view product")
-      window.location.href="index.html"
-      
+      window.location.href = "index.html"
+
     })
   }
 
 
-  
+
 
 
   function deliveryOptionHtml(matchingProduct, cartItem) {
@@ -95,7 +95,7 @@ export function renderOrderSummary() {
 
       if (price === "Free") {
         html += `<div class="delivery-charge-container js-delivery-option" data-product-id="${matchingProduct.id}" data-delivery-option-id="${deliveryOption.id}">
-    <input class="delivery-charge-radio-btn js-delivery-option-${cartItem.id}-${deliveryOption.id}" ${isChecked ? "checked" : " "} type="radio" name="delivery-date-${cartItem.id}" value="${dateString}">
+    <input class="delivery-charge-radio-btn js-delivery-option-input js-delivery-option-${cartItem.id}-${deliveryOption.id}" ${isChecked ? "checked" : " "} type="radio" data-delivery-option-id="${deliveryOption.id}" name="delivery-date-${cartItem.id}" value="${dateString}">
     <div>
       <p class="delivery-date">${dateString}</p>
       <div class="delivery-charge">
@@ -107,7 +107,7 @@ export function renderOrderSummary() {
       else {
         html += `<div class="delivery-charge-container js-delivery-option"
     data-product-id="${matchingProduct.id}" data-delivery-option-id="${deliveryOption.id}">
-    <input class="delivery-charge-radio-btn js-delivery-option-${cartItem.id}-${deliveryOption.id}" ${isChecked ? "checked" : " "} type="radio" name="delivery-date-${cartItem.id}" value="${dateString}">
+    <input class="delivery-charge-radio-btn js-delivery-option-input js-delivery-option-${cartItem.id}-${deliveryOption.id}" ${isChecked ? "checked" : " "} type="radio" data-delivery-option-id="${deliveryOption.id}" name="delivery-date-${cartItem.id}" value="${dateString}">
     <div>
       <p class="delivery-date js-delivery-">${dateString}</p>
       <div class="delivery-charge">
@@ -121,10 +121,10 @@ export function renderOrderSummary() {
     })
 
     return html
-    
+
   }
 
- 
+
 
   // let orderSummaryContainer = document.querySelector(".order-summary-container")
 
@@ -138,10 +138,12 @@ export function renderOrderSummary() {
 
   }
 
-  document.querySelectorAll(".js-delete-btn").forEach((link) => {
 
-    link.addEventListener("click", () => {
-      let cartId = link.dataset.cartId
+  const orderSummaryContainer = document.querySelector(".order-summary-container")
+
+  orderSummaryContainer.addEventListener("click", (event) => {
+    if (Object.values(event.target.classList).includes("js-delete-btn")) {
+      let cartId = event.target.dataset.cartId
       cart.removeProductFromCart(cartId)
       let container = document.querySelector(`.ordered-product-container-${cartId}`)
       console.log(container)
@@ -149,17 +151,11 @@ export function renderOrderSummary() {
       renderOrderSummary()
       updationCartQuantity()
       renderPaymentSummary()
+    }
 
-    })
-  })
+    if(Object.values(event.target.classList).includes("js-update-btn")){
 
-  updationCartQuantity()
-
-
-
-  document.querySelectorAll(".js-update-btn").forEach((link) => {
-    link.addEventListener("click", () => {
-      let cartId = link.dataset.cartId
+      let cartId = event.target.dataset.cartId
       let updateBtn = document.querySelector(`.js-update-btn-${cartId}`)
 
 
@@ -180,67 +176,45 @@ export function renderOrderSummary() {
       document.querySelector(`.quantity-${cartId}`).innerHTML = "Quantity: "
       updateBtn.style.display = "none"
 
-    })
+    }
 
+    if(Object.values(event.target.classList).includes("js-save-quantity")){
+
+        let cartId = event.target.dataset.cartId;
+        let savequantity = document.querySelector(`.js-quantity-input-${cartId}`)
+        console.log(savequantity)
+        let newQuantity = Number(savequantity.value)
+  
+        if(newQuantity<1){
+           alert("Not a Valid Quantity")
+           return;
+        }
+  
+        document.querySelector(`.quantity-${cartId}`).innerHTML = `Quantity: ${newQuantity}`
+        let quantityInput = document.querySelector(`.js-quantity-input-${cartId}`)
+        let saveQuantityInput = document.querySelector(`.js-save-quantity-${cartId}`)
+        let updateBtn = document.querySelector(`.js-update-btn-${cartId}`)
+        quantityInput.style.display = "none"
+        saveQuantityInput.style.display = "none"
+        updateBtn.style.display = "inline"
+        cart.updateQuantity(cartId, newQuantity);
+        cart.updateCartQuantity()
+        updationCartQuantity()
+        renderPaymentSummary()
+
+    }
+    
+    if(Object.values(event.target.classList).includes("js-delivery-option-input")){
+        
+        const productContainer=event.target.closest(".js-cart-item")
+        console.log(productContainer)
+        const cartId=productContainer.getAttribute("data-cart-id")
+        console.log(cartId)
+        const deliveryOptionId=event.target.dataset.deliveryOptionId
+        cart.updateDeliveryOption(cartId,deliveryOptionId)
+        renderOrderSummary()
+        renderPaymentSummary()
+
+    }
   })
-
-  document.querySelectorAll(".js-save-quantity").forEach((link) => {
-
-    link.addEventListener("click", () => {
-      console.log(link);
-      let cartId = link.dataset.cartId;
-      let savequantity = document.querySelector(`.js-quantity-input-${cartId}`)
-      console.log(savequantity)
-      let newQuantity = Number(savequantity.value)
-
-      if(newQuantity<1){
-         alert("Not a Valid Quantity")
-         return;
-      }
-
-      document.querySelector(`.quantity-${cartId}`).innerHTML = `Quantity: ${newQuantity}`
-      let quantityInput = document.querySelector(`.js-quantity-input-${cartId}`)
-      let saveQuantityInput = document.querySelector(`.js-save-quantity-${cartId}`)
-      let updateBtn = document.querySelector(`.js-update-btn-${cartId}`)
-      quantityInput.style.display = "none"
-      saveQuantityInput.style.display = "none"
-      updateBtn.style.display = "inline"
-      cart.updateQuantity(cartId, newQuantity);
-      cart.updateCartQuantity()
-      updationCartQuantity()
-      renderPaymentSummary()
-
-
-
-    })
-
-  })
-
-
-
-  document.querySelectorAll(".js-delivery-option").forEach((element) => {
-
-    element.addEventListener("click", () => {
-
-      const producContainer=element.closest(".js-cart-item")
-      const cartId=producContainer.getAttribute("data-cart-id")
-      const deliveryOptionId=element.dataset.deliveryOptionId
-      cart.updateDeliveryOption(cartId,deliveryOptionId)
-      renderOrderSummary()
-      renderPaymentSummary()
-
-
-
-
-
-      // console.log(element)
-      // const { productId, deliveryOptionId } = element.dataset
-      // console.log(productId, deliveryOptionId)
-      // cart.updateDeliveryOption(productId, deliveryOptionId)
-      // renderOrderSummary()
-      // renderPaymentSummary()
-
-    })
-  })
-
 }

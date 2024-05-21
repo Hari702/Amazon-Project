@@ -38,7 +38,7 @@ function renderProducts() {
         })
     }
 
-    
+
     if (filteredProduct.length === 0) {
         document.querySelector(".products-container").innerHTML = `
                          <div class="empty-results-message">
@@ -121,7 +121,7 @@ function renderProducts() {
         let optionHtml = ""
         variationOption.forEach((option, index) => {
             optionHtml += `
-             <button class="${index === 0 ? "variation-option-btn-selected" : " "}  variation-option-btn" 
+             <button class="${index === 0 ? "variation-option-btn-selected" : " "} variation-option-btn" 
               data-variation-name="${variationName}"
               data-variation-value="${option}"
               data-testid="variation-${variationName}-${option}">
@@ -130,47 +130,8 @@ function renderProducts() {
         })
         return optionHtml
     }
-
-
     document.querySelector(".products-container").innerHTML = product_html;
-
-
-    document.querySelectorAll(".variation-option-btn").forEach((element) => {
-        element.addEventListener("click", (event) => {
-            let button = event.target
-            const variationContainer = button.closest(".option-container")
-
-            const previousButton = variationContainer.querySelector(".variation-option-btn-selected")
-
-            previousButton.classList.remove("variation-option-btn-selected")
-
-            button.classList.add("variation-option-btn-selected")
-
-            const productContainer = button.closest(".js-product-container")
-            console.log(productContainer)
-
-            const productId = productContainer.dataset.productId
-            console.log(productId)
-
-            const product = getProduct(productId)
-            console.log(product)
-
-            const variation = getSelectedVariation(productContainer)
-
-            const productImage = product.createImageUrl(variation)
-
-            productContainer.querySelector(".product-image").src = productImage
-
-
-
-
-
-
-
-
-        })
-    })
-
+   
     function getSelectedVariation(productContainer) {
 
         if (!productContainer.querySelector(".variation-option-btn-selected")) {
@@ -196,27 +157,19 @@ function renderProducts() {
 
     }
 
-
-    let js_add_cart_btn = document.querySelectorAll(".js-add-to-cart-btn")
-
     let cartQuantity = cart.updateCartQuantity();
     document.querySelector(".order-num").innerHTML = cartQuantity
 
+   
 
-    js_add_cart_btn.forEach((button) => {
+    const productsContainer = document.querySelector(".products-container")
 
-        let addedMessageTimeout;
-        button.addEventListener("click", () => {
-            console.log(button.dataset.productId)
-            let productid = button.dataset.productId
-            let productContainer = button.closest(".js-product-container")
+    let addedMessageTimeout;
+    productsContainer.addEventListener("click", (event) => {
+        if (Object.values(event.target.classList).includes("Add-to-Cart-btn")) {
+            let productid = event.target.dataset.productId
+            let productContainer = event.target.closest(".js-product-container")
             let selectedVariationDetails = {}
-            // let variationValue=[]
-            // productContainer.querySelectorAll(".option-header").forEach((button)=>{
-            //      button.innerHTML
-
-            // })
-
 
             productContainer.querySelectorAll(".variation-option-btn-selected").forEach((button) => {
                 selectedVariationDetails[button.dataset.variationName] = button.dataset.variationValue
@@ -225,7 +178,6 @@ function renderProducts() {
             })
 
             console.log(selectedVariationDetails)
-
 
             let quantity = parseInt(document.querySelector(`.js-quantity-selector-${productid}`).value)
             cart.addToCart(productid, quantity, selectedVariationDetails);
@@ -248,19 +200,39 @@ function renderProducts() {
 
             addedMessageTimeout = closure_id
 
-            // displayAdded(productid);
+        }
 
-            console.log(button)
+        if(Object.values(event.target.classList).includes("variation-option-btn")){
+
+            
+                let button = event.target
+                const variationContainer = button.closest(".option-container")
+    
+                const previousButton = variationContainer.querySelector(".variation-option-btn-selected")
+    
+                previousButton.classList.remove("variation-option-btn-selected")
+    
+                button.classList.add("variation-option-btn-selected")
+    
+                const productContainer = button.closest(".js-product-container")
+                console.log(productContainer)
+    
+                const productId = productContainer.dataset.productId
+                console.log(productId)
+    
+                const product = getProduct(productId)
+                console.log(product)
+    
+                const variation = getSelectedVariation(productContainer)
+    
+                const productImage = product.createImageUrl(variation)
+    
+                productContainer.querySelector(".product-image").src = productImage
+           
+
+        }
 
         })
-
-
-        // console.log(addedMessageTimeout)
-        // })
-
-    })
-
-
 }
 
 

@@ -128,57 +128,6 @@ export async function loadPage() {
             console.log(order)
             
             cart.addToCart(productId,1,variationDetails)
-            // function addToCart(productid,selectedVariationDetails) {
-            //     //   adding product to the cart
-            //   /*  let matchingitem;
-            //     cart.cartItems.forEach((cartItem) => {
-            //         // console.log(`${productname}===${item.productname}`)
-            //         if (productid === cartItem.productid) {
-            //             matchingitem = cartItem
-            //         }
-            //     })
-
-            //     if (matchingitem) {
-            //         matchingitem.quantity +=1
-            //     }
-
-            //     else {
-            //         cart.cartItems.push({
-            //             // productid:productid
-            //             productid,
-            //             // quantity:quantity
-            //             quantity:1,
-            //             deliveryOptionId: "1"
-            //         })
-
-            //     }
-            //     cart.addCartToLocalStorage()*/
-            //     let matchingitem;
-
-            //     matchingitem=cart.cartItems.find((cartItem)=>{
-            //         return productid===cartItem.productid && cart.isSameVariation(cartItem.variationDetails,selectedVariationDetails)
-            //     })
-    
-            //     if (matchingitem) {
-            //         matchingitem.quantity += quantity
-            //     }
-    
-            //     else {
-            //         cart.cartItems.push({
-            //             id:cartId,
-            //             // productid:productid
-            //             productid,
-            //             // quantity:quantity
-            //             quantity,
-            //             variationDetails:selectedVariationDetails,
-    
-            //             deliveryOptionId: "1"
-            //         })
-    
-            //     }
-            //     cart.addCartToLocalStorage()
-
-            // }
             let cartQuantity = cart.updateCartQuantity();
             document.querySelector(".order-num").innerHTML = cartQuantity
            
