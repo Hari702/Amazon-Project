@@ -125,13 +125,6 @@ export function renderOrderSummary() {
   }
 
 
-
-  // let orderSummaryContainer = document.querySelector(".order-summary-container")
-
-  // console.log(orderSummaryContainer)
-  // orderSummaryContainer.innerHTML = cartProductHtml
-
-
   function updationCartQuantity() {
     let cartQuantity = cart.updateCartQuantity();
     document.querySelector(".items").innerHTML = `${cartQuantity} items`
@@ -139,11 +132,10 @@ export function renderOrderSummary() {
   }
 
 
-  const orderSummaryContainer = document.querySelector(".order-summary-container")
+  document.querySelectorAll(".js-delete-btn").forEach((link) => {
 
-  orderSummaryContainer.addEventListener("click", (event) => {
-    if (Object.values(event.target.classList).includes("js-delete-btn")) {
-      let cartId = event.target.dataset.cartId
+    link.addEventListener("click", () => {
+      let cartId = link.dataset.cartId
       cart.removeProductFromCart(cartId)
       let container = document.querySelector(`.ordered-product-container-${cartId}`)
       console.log(container)
@@ -151,11 +143,17 @@ export function renderOrderSummary() {
       renderOrderSummary()
       updationCartQuantity()
       renderPaymentSummary()
-    }
 
-    if(Object.values(event.target.classList).includes("js-update-btn")){
+    })
+  })
 
-      let cartId = event.target.dataset.cartId
+  updationCartQuantity()
+
+
+
+  document.querySelectorAll(".js-update-btn").forEach((link) => {
+    link.addEventListener("click", () => {
+      let cartId = link.dataset.cartId
       let updateBtn = document.querySelector(`.js-update-btn-${cartId}`)
 
 
@@ -176,45 +174,53 @@ export function renderOrderSummary() {
       document.querySelector(`.quantity-${cartId}`).innerHTML = "Quantity: "
       updateBtn.style.display = "none"
 
-    }
+    })
 
-    if(Object.values(event.target.classList).includes("js-save-quantity")){
-
-        let cartId = event.target.dataset.cartId;
-        let savequantity = document.querySelector(`.js-quantity-input-${cartId}`)
-        console.log(savequantity)
-        let newQuantity = Number(savequantity.value)
-  
-        if(newQuantity<1){
-           alert("Not a Valid Quantity")
-           return;
-        }
-  
-        document.querySelector(`.quantity-${cartId}`).innerHTML = `Quantity: ${newQuantity}`
-        let quantityInput = document.querySelector(`.js-quantity-input-${cartId}`)
-        let saveQuantityInput = document.querySelector(`.js-save-quantity-${cartId}`)
-        let updateBtn = document.querySelector(`.js-update-btn-${cartId}`)
-        quantityInput.style.display = "none"
-        saveQuantityInput.style.display = "none"
-        updateBtn.style.display = "inline"
-        cart.updateQuantity(cartId, newQuantity);
-        cart.updateCartQuantity()
-        updationCartQuantity()
-        renderPaymentSummary()
-
-    }
-    
-    if(Object.values(event.target.classList).includes("js-delivery-option-input")){
-        
-        const productContainer=event.target.closest(".js-cart-item")
-        console.log(productContainer)
-        const cartId=productContainer.getAttribute("data-cart-id")
-        console.log(cartId)
-        const deliveryOptionId=event.target.dataset.deliveryOptionId
-        cart.updateDeliveryOption(cartId,deliveryOptionId)
-        renderOrderSummary()
-        renderPaymentSummary()
-
-    }
   })
+
+  document.querySelectorAll(".js-save-quantity").forEach((link) => {
+
+    link.addEventListener("click", () => {
+      console.log(link);
+      let cartId = link.dataset.cartId;
+      let savequantity = document.querySelector(`.js-quantity-input-${cartId}`)
+      console.log(savequantity)
+      let newQuantity = Number(savequantity.value)
+
+      if(newQuantity<1){
+         alert("Not a Valid Quantity")
+         return;
+      }
+
+      document.querySelector(`.quantity-${cartId}`).innerHTML = `Quantity: ${newQuantity}`
+      let quantityInput = document.querySelector(`.js-quantity-input-${cartId}`)
+      let saveQuantityInput = document.querySelector(`.js-save-quantity-${cartId}`)
+      let updateBtn = document.querySelector(`.js-update-btn-${cartId}`)
+      quantityInput.style.display = "none"
+      saveQuantityInput.style.display = "none"
+      updateBtn.style.display = "inline"
+      cart.updateQuantity(cartId, newQuantity);
+      cart.updateCartQuantity()
+      updationCartQuantity()
+      renderPaymentSummary()
+
+
+
+    })
+
+  })
+
+  document.querySelectorAll(".js-delivery-option").forEach((element) => {
+
+    element.addEventListener("click", () => {
+
+      const producContainer=element.closest(".js-cart-item")
+      const cartId=producContainer.getAttribute("data-cart-id")
+      const deliveryOptionId=element.dataset.deliveryOptionId
+      cart.updateDeliveryOption(cartId,deliveryOptionId)
+      renderOrderSummary()
+      renderPaymentSummary()
+    })
+  })
+
 }
