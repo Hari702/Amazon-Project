@@ -53,26 +53,63 @@ export function renderHeaderHtml() {
         document.querySelector(".js-header-input").addEventListener("keydown", (event) => {
 
             if (event.key === "Enter") {
-                const searchInput = document.querySelector(".js-header-input").value
-                window.location.href = `index.html?search=${searchInput}`
+                window.location.href = `index.html?search=${event.target.value}`
             }
-
         })
+
+        let searchText = debouncing((searchInput) => {
+            window.location.href = `index.html?search=${searchInput}`
+            console.log("debouncing")
+        })
+
+        document.querySelector(".js-header-input").addEventListener("input", (event) => {
+            searchText(event.target.value)
+        })
+        function debouncing(func, delay = 2000) {
+            let timeout
+            return function (...args) {
+                clearInterval(timeout)
+                timeout = setTimeout(() => {
+                    func(...args)
+                }, delay)
+
+            }
+        }
+        
+
     }
 
-    if(document.querySelector(".js-mobile-search-button")) {
+    if (document.querySelector(".js-mobile-search-button")) {
         document.querySelector(".js-mobile-search-button").addEventListener("click", () => {
-            const searchInput = document.querySelector(".js-mobile-header-input").value
+            const searchInput = document.querySelector(".js-header-input").value
             window.location.href = `index.html?search=${searchInput}`
         })
 
         document.querySelector(".js-mobile-header-input").addEventListener("keydown", (event) => {
 
             if (event.key === "Enter") {
-                const searchInput = document.querySelector(".js-mobile-header-input").value
-                window.location.href = `index.html?search=${searchInput}`
+                window.location.href = `index.html?search=${event.target.value}`
             }
 
         })
+
+        let searchText = debouncing((searchInput) => {
+            window.location.href = `index.html?search=${searchInput}`
+            console.log("debouncing")
+        })
+
+        document.querySelector(".js-mobile-header-input").addEventListener("input", (event) => {
+            searchText(event.target.value)
+        })
+        function debouncing(func, delay = 2000) {
+            let timeout
+            return function (...args) {
+                clearInterval(timeout)
+                timeout = setTimeout(() => {
+                    func(...args)
+                }, delay)
+
+            }
+        }
     }
 }
